@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="AnnData是python中存储单细胞数据的一种格式 1. AnnData数据结构： 主要包含四个slots：X contains the expression matrix.obsm contains the embeddings data.obs contains the cell metadata.var contains the gene metadata.   123456789101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scanpy数据结构：AnnData">
+<meta property="og:url" content="http://example.com/2023/08/06/Scanpy%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9AAnnData/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="AnnData是python中存储单细胞数据的一种格式 1. AnnData数据结构： 主要包含四个slots：X contains the expression matrix.obsm contains the embeddings data.obs contains the cell metadata.var contains the gene metadata.   123456789101">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2023-08-06T14:45:51.000Z">
+<meta property="article:modified_time" content="2023-10-08T07:10:20.446Z">
+<meta property="article:author" content="YesseniaCQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+<title >Scanpy数据结构：AnnData</title>
+
+<!-- Favicon -->
+
+    <link href='/logo.svg?v=2.0.9' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/logo.svg?v=2.0.9' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+    <link href='/apple-touch-icon.png?v=2.0.9' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+    <link href='/site.webmanifest' rel='manifest' ></link>
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="https://unpkg.com/hexo-theme-async@2.0.9/source/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/katex@latest/dist/katex.min.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"YesseniaCQ","root":"/","typed_text":["little space of my"],"theme_version":"2.0.9","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"logo.svg","icon16":"logo.svg","icon32":"logo.svg","appleTouchIcon":"apple-touch-icon.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","showText":"","hideText":"(●—●)等你回来哦"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":200},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"preload":true,"trigger":"auto","path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-10-08 15:10:20"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.0.9" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+    
+        <!-- Baidu Analytics -->
+        <script defer>
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?百度统计Key";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+     
+
+    
+
+    
+ 
+<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="https://unpkg.com/video.js@6.7.1/dist/video-js.css">
+<script src="https://unpkg.com/video.js@6.7.1/dist/video.js"></script>
+<script src="https://unpkg.com/@videojs/http-streaming@0.9.0/dist/videojs-http-streaming.js"></script></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/logo.svg">
+    
+    
+        <div class="trm-logo-text">
+            星夜<span>来信</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/archives2/" target="">
+                            archives2
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/tags/" target="">
+                    标签
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/about/" target="">
+                    关于我
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+  <!-- banner -->
+  <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            Scanpy数据结构：AnnData
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2023
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+
+<script>
+    var myVideo = videojs('welcomeVideo', {
+      loop: true,
+      controls: false,
+      preload: 'auto',
+      autoplay: true,
+    });
+  </script>
+  <!-- banner end -->
+  <div class="container">
+      <div class="row">
+          
+              <div id="page-sidebar" class="col-lg-4 hidden-sm">
+                  <!-- main card -->
+                  
+
+<div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="https://pic1.zhimg.com/80/v2-b40c6aeeced6da9931ce74640452425c_720w.webp">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        Yessenia
+    </h5>
+    
+        <div class="trm-label">
+            A
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont iconfont cg-gitee"></i>
+        </a>
+    
+        <a href="https://xingyelaixin.lofter.com/" title="lofter" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-snowboarding"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                铺星小筑
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年龄:
+            </div>
+            <div class="trm-label trm-label-light">
+                21
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:admin@imalun.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    
+    </div>
+</div>
+                  <!-- main card end -->
+              </div>
+          
+          <div id="page-content" class="col-lg-8">
+              <div class="trm-content" id="trm-content">
+                  <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                  <div id="post-info" class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            08/06
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            22:45
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            YesseniaCQ
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <p>AnnData是python中存储单细胞数据的一种格式</p>
+<h5 id="1-AnnData数据结构："><a href="#1-AnnData数据结构：" class="headerlink" title="1. AnnData数据结构："></a>1. AnnData数据结构：</h5><blockquote>
+<p>主要包含四个slots：<br><code>X</code> contains the expression matrix.<br><code>obsm</code> contains the embeddings data.<br><code>obs</code> contains the cell metadata.<br><code>var</code> contains the gene metadata.</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/15771939-738878fe0ad17428.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">adata</span><br><span class="line"># AnnData object <span class="keyword">with</span> n_obs × n_vars = <span class="number">2638</span> × <span class="number">1838</span></span><br><span class="line">#     obs: <span class="string">&#x27;n_genes&#x27;</span>, <span class="string">&#x27;n_genes_by_counts&#x27;</span>, <span class="string">&#x27;total_counts&#x27;</span>, <span class="string">&#x27;total_counts_mt&#x27;</span>, <span class="string">&#x27;pct_counts_mt&#x27;</span>, <span class="string">&#x27;leiden&#x27;</span>, <span class="string">&#x27;louvain&#x27;</span>, <span class="string">&#x27;louvain_anno&#x27;</span></span><br><span class="line">#     <span class="keyword">var</span>: <span class="string">&#x27;gene_ids&#x27;</span>, <span class="string">&#x27;n_cells&#x27;</span>, <span class="string">&#x27;mt&#x27;</span>, <span class="string">&#x27;n_cells_by_counts&#x27;</span>, <span class="string">&#x27;mean_counts&#x27;</span>, <span class="string">&#x27;pct_dropout_by_counts&#x27;</span>, <span class="string">&#x27;total_counts&#x27;</span>, <span class="string">&#x27;highly_variable&#x27;</span>, <span class="string">&#x27;means&#x27;</span>, <span class="string">&#x27;dispersions&#x27;</span>, <span class="string">&#x27;dispersions_norm&#x27;</span>, <span class="string">&#x27;mean&#x27;</span>, <span class="string">&#x27;std&#x27;</span></span><br><span class="line">#     uns: <span class="string">&#x27;hvg&#x27;</span>, <span class="string">&#x27;leiden&#x27;</span>, <span class="string">&#x27;leiden_colors&#x27;</span>, <span class="string">&#x27;neighbors&#x27;</span>, <span class="string">&#x27;pca&#x27;</span>, <span class="string">&#x27;rank_genes_groups&#x27;</span>, <span class="string">&#x27;umap&#x27;</span>, <span class="string">&#x27;draw_graph&#x27;</span>, <span class="string">&#x27;diffmap_evals&#x27;</span>, <span class="string">&#x27;louvain&#x27;</span>, <span class="string">&#x27;paga&#x27;</span>, <span class="string">&#x27;louvain_sizes&#x27;</span>, <span class="string">&#x27;louvain_colors&#x27;</span>, <span class="string">&#x27;leiden_sizes&#x27;</span></span><br><span class="line">#     obsm: <span class="string">&#x27;X_pca&#x27;</span>, <span class="string">&#x27;X_umap&#x27;</span>, <span class="string">&#x27;X_draw_graph_fa&#x27;</span>, <span class="string">&#x27;X_diffmap&#x27;</span></span><br><span class="line">#     varm: <span class="string">&#x27;PCs&#x27;</span></span><br><span class="line">#     obsp: <span class="string">&#x27;connectivities&#x27;</span>, <span class="string">&#x27;distances&#x27;</span></span><br><span class="line"></span><br><span class="line"># 查看帮助文档和数据类型</span><br><span class="line">help(adata)</span><br><span class="line">type(adata.<span class="keyword">var</span>[<span class="string">&quot;gene_ids&quot;</span>])</span><br><span class="line"># pandas.core.series.Series</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.X</code>这个部分储存的是矩阵信息，数据结构是<code>numpy array</code>，和seurat对象一样，基因variable *细胞observation的稀疏矩阵。<br>但是.X的结构ndarray，是一个数组，是没有行名列名消息的。行名和列名消息存储在.obs和.var里。</li>
+</ul>
+<p>调取矩阵信息：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import scvelo as scv</span><br><span class="line">scv<span class="selector-class">.DataFrame</span>(adata<span class="selector-class">.X</span>)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/15771939-162cb9f01263eff9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<ul>
+<li><code>.obs</code>存储的是细胞的信息，数据结构是<code>pandas dataframe</code>。<br>相当于Seurat对象中的metadata</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adata<span class="selector-class">.obs</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/15771939-08df5d5f7222e975.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>一维针对观测的注释，是数据框类型</p>
+<p>访问其中的一个属性，就通过普通的dataframe来访问：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">adata<span class="selector-class">.obs</span><span class="selector-attr">[<span class="string">&#x27;n_genes&#x27;</span>]</span></span><br><span class="line">AAACATACAACCAC-<span class="number">1</span>     <span class="number">781</span></span><br><span class="line">AAACATTGAGCTAC-<span class="number">1</span>    <span class="number">1352</span></span><br><span class="line">AAACATTGATCAGC-<span class="number">1</span>    <span class="number">1131</span></span><br><span class="line">AAACCGTGCTTCCG-<span class="number">1</span>     <span class="number">960</span></span><br><span class="line">AAACCGTGTATGCG-<span class="number">1</span>     <span class="number">522</span></span><br><span class="line">                    ... </span><br><span class="line">TTTCGAACTCTCAT-<span class="number">1</span>    <span class="number">1155</span></span><br><span class="line">TTTCTACTGAGGCA-<span class="number">1</span>    <span class="number">1227</span></span><br><span class="line">TTTCTACTTCCTCG-<span class="number">1</span>     <span class="number">622</span></span><br><span class="line">TTTGCATGAGAGGC-<span class="number">1</span>     <span class="number">454</span></span><br><span class="line">TTTGCATGCCTCAC-<span class="number">1</span>     <span class="number">724</span></span><br><span class="line">Name: n_genes, Length: <span class="number">2638</span>, dtype: int64</span><br></pre></td></tr></table></figure>
+
+<p>查看有多少cluster&#x2F;细胞亚群…</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adata<span class="selector-class">.obs</span><span class="selector-attr">[<span class="string">&#x27;clusters&#x27;</span>]</span><span class="selector-class">.unique</span>()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>.var</code>存储的是基因的信息，数据结构是<code>pandas dataframe</code>。</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adata.<span class="keyword">var</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/15771939-c35a34916e158070.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200/format/webp" alt="img" loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>一维的针对特征的注释，返回数据框类型。</p>
+<p>访问其中一个属性的方法和.obs一样</p>
+<ul>
+<li><code>.uns</code>存储的是后续添加的非结构信息，数据结构是<code>dict</code>，有序字典。</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adata.uns[<span class="string">&#x27;leiden&#x27;</span>]</span><br><span class="line"># &#123;<span class="string">&#x27;params&#x27;</span>: &#123;<span class="string">&#x27;resolution&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;random_state&#x27;</span>: <span class="number">0</span>, <span class="string">&#x27;n_iterations&#x27;</span>: -<span class="number">1</span>&#125;&#125;</span><br><span class="line">adata.uns[<span class="string">&#x27;leiden_colors&#x27;</span>]</span><br><span class="line"># array([<span class="string">&#x27;#1f77b4&#x27;</span>, <span class="string">&#x27;#ff7f0e&#x27;</span>, <span class="string">&#x27;#279e68&#x27;</span>, <span class="string">&#x27;#d62728&#x27;</span>, <span class="string">&#x27;#aa40fc&#x27;</span>, <span class="string">&#x27;#8c564b&#x27;</span>, <span class="string">&#x27;#e377c2&#x27;</span>, <span class="string">&#x27;#b5bd61&#x27;</span>], dtype=<span class="keyword">object</span>)</span><br></pre></td></tr></table></figure>
+
+<p>这个uns的部分不是针对行&#x2F;列的，而是针对行和列标注的参数的（暂时这么理解），在上述中pbmc的obs中有louvain观测，那么在uns中就是运行louvain算法的参数。是以哈希形式存储的。</p>
+<ul>
+<li><code>obsm</code><br>对观测的<strong>多维</strong>的注释，m指的就是multi-dim多个维度。它是2-多维的ndarray，长度为n_obs。（obs是一个维度可以都放在一个数据框下）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adata.obsm</span><br><span class="line"><span class="comment"># AxisArrays with keys: X_pca, X_umap, X_draw_graph_fa</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(adata.obsm[<span class="string">&#x27;X_pca&#x27;</span>].shape,adata.obsm[<span class="string">&#x27;X_umap&#x27;</span>].shape)</span><br><span class="line">adata.obsm[<span class="string">&#x27;X_pca&#x27;</span>]</span><br><span class="line"><span class="comment"># (2638, 50) (2638, 2)</span></span><br><span class="line"><span class="comment"># array([[-5.5562196 , -0.257729  ,  0.18678935, ..., -0.33962035,</span></span><br><span class="line"><span class="comment">#          1.482267  ,  1.8977386 ],</span></span><br><span class="line"><span class="comment">#        [-7.209527  , -7.4819927 , -0.1626957 , ..., -1.9776347 ,</span></span><br><span class="line"><span class="comment">#         -1.5584233 , -1.4961302 ],</span></span><br><span class="line"><span class="comment">#        [-2.694437  ,  1.5836601 ,  0.6631187 , ...,  0.543645  ,</span></span><br><span class="line"><span class="comment">#         -0.54527736, -4.3395023 ],</span></span><br><span class="line"><span class="comment">#        ...,</span></span><br><span class="line"><span class="comment">#        [-0.78539336, -6.718588  , -1.5988318 , ..., -0.5611978 ,</span></span><br><span class="line"><span class="comment">#         -0.10546814,  0.58385324],</span></span><br><span class="line"><span class="comment">#        [ 0.2812712 , -5.921852  , -1.1628692 , ..., -1.3820586 ,</span></span><br><span class="line"><span class="comment">#          3.5802112 ,  1.2988565 ],</span></span><br><span class="line"><span class="comment">#        [-0.09076688, -0.66350466, -0.13485757, ...,  0.37319255,</span></span><br><span class="line"><span class="comment">#          0.75012326, -0.6659836 ]], dtype=float32)</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>varm</code><br>对特征的多维的注释，与obsm相对。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">adata.varm</span><br><span class="line"><span class="comment"># AxisArrays with keys: PCs</span></span><br><span class="line"><span class="built_in">print</span>(adata.varm[<span class="string">&#x27;PCs&#x27;</span>].shape)</span><br><span class="line">adata.varm[<span class="string">&#x27;PCs&#x27;</span>]</span><br><span class="line"><span class="comment"># (1838, 50)</span></span><br><span class="line"><span class="comment"># array([[-2.6014808565e-02,  3.2541397959e-03,  1.8978352891e-03, ...,</span></span><br><span class="line"><span class="comment">#         -5.1610143855e-03,  1.4520395547e-02, -6.6632591188e-04],</span></span><br><span class="line"><span class="comment">#       [-8.2782376558e-03,  9.0831620619e-03, -7.8140682308e-04, ...,</span></span><br><span class="line"><span class="comment">#         3.0852310359e-02, -8.9336717501e-03, -2.8796317056e-03],</span></span><br><span class="line"><span class="comment">#       [-3.3151865937e-03,  3.2096833456e-03,  2.7985233464e-04, ...,</span></span><br><span class="line"><span class="comment">#         1.0144758970e-02, -5.5128755048e-04,  1.5089971712e-03],</span></span><br><span class="line"><span class="comment">#       ...,</span></span><br><span class="line"><span class="comment">#       [ 8.3417436108e-03, -1.2465091422e-03, -4.1219405830e-03, ...,</span></span><br><span class="line"><span class="comment">#        -1.0164264590e-02,  9.2523321509e-03,  2.7965774760e-02],</span></span><br><span class="line"><span class="comment">#       [-1.6406573355e-02,  4.4101417065e-02, -2.1357089281e-05, ...,</span></span><br><span class="line"><span class="comment">#         9.9819628522e-03, -4.5361258090e-03, -1.3653293252e-02],</span></span><br><span class="line"><span class="comment">#       [-1.5188260004e-02,  4.0008693933e-02,  5.4121930152e-03, ...,</span></span><br><span class="line"><span class="comment">#        -3.6789905280e-03,  2.1117802709e-02,  3.5965379328e-02]])</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>obsp</code><br>针对观测的配对的注释，前两维都是n_obs。比如点与点之间的距离和连通性。</li>
+</ul>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">adata.<span class="property">obsp</span></span><br><span class="line"># <span class="title class_">PairwiseArrays</span> <span class="keyword">with</span> <span class="attr">keys</span>: connectivities, distances</span><br><span class="line">adata.<span class="property">obsp</span>[<span class="string">&#x27;connectivities&#x27;</span>]</span><br><span class="line"># &lt;2638x2638 sparse matrix <span class="keyword">of</span> <span class="keyword">type</span> <span class="string">&#x27;&lt;class &#x27;</span>numpy.<span class="property">float32</span><span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">#   <span class="keyword">with</span> <span class="number">41952</span> stored elements <span class="keyword">in</span> <span class="title class_">Compressed</span> <span class="title class_">Sparse</span> <span class="title class_">Row</span> format&gt;</span><br><span class="line">adata.<span class="property">obsp</span>[<span class="string">&#x27;distances&#x27;</span>]</span><br><span class="line"># &lt;2638x2638 sparse matrix <span class="keyword">of</span> <span class="keyword">type</span> <span class="string">&#x27;&lt;class &#x27;</span>numpy.<span class="property">float64</span><span class="string">&#x27;&gt;&#x27;</span></span><br><span class="line">#   <span class="keyword">with</span> <span class="number">23742</span> stored elements <span class="keyword">in</span> <span class="title class_">Compressed</span> <span class="title class_">Sparse</span> <span class="title class_">Row</span> format&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>layers</code><br>在做速率分析的时候，还可以看到adata中有layers这一部分的信息。</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">adata = scv.datasets.pancreas()</span><br><span class="line">adata</span><br><span class="line">AnnData <span class="built_in">object</span> <span class="keyword">with</span> n_obs × n_vars = <span class="number">3696</span> × <span class="number">27998</span></span><br><span class="line">    obs: <span class="string">&#x27;clusters_coarse&#x27;</span>, <span class="string">&#x27;clusters&#x27;</span>, <span class="string">&#x27;S_score&#x27;</span>, <span class="string">&#x27;G2M_score&#x27;</span></span><br><span class="line">    <span class="keyword">var</span>: <span class="string">&#x27;highly_variable_genes&#x27;</span></span><br><span class="line">    uns: <span class="string">&#x27;clusters_coarse_colors&#x27;</span>, <span class="string">&#x27;clusters_colors&#x27;</span>, <span class="string">&#x27;day_colors&#x27;</span>, <span class="string">&#x27;neighbors&#x27;</span>, <span class="string">&#x27;pca&#x27;</span></span><br><span class="line">    obsm: <span class="string">&#x27;X_pca&#x27;</span>, <span class="string">&#x27;X_umap&#x27;</span></span><br><span class="line">    layers: <span class="string">&#x27;spliced&#x27;</span>, <span class="string">&#x27;unspliced&#x27;</span></span><br><span class="line">    obsp: <span class="string">&#x27;distances&#x27;</span>, <span class="string">&#x27;connectivities&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Dictionary-like object with values of the same dimensions as <code>X</code>.<br>可以理解为平行空间的对象，比如Seurat里面的count，标准化之后叫data，归一化之后叫scale.data。</p>
+<h5 id="2-提取信息"><a href="#2-提取信息" class="headerlink" title="2. 提取信息"></a>2. 提取信息</h5><p>可以使用adata.然后输入Tab来查看可以使用的函数或变量。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 数据数目统计</span></span><br><span class="line">adata.n_obs  <span class="meta"># 返回细胞数 2695</span></span><br><span class="line">adata.n_vars  <span class="meta"># 返回基因数 18270</span></span><br><span class="line">adata.shape <span class="meta"># (2695, 18270)</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 数据键值提取</span></span><br><span class="line">adata.obs_keys() <span class="meta"># 细胞注释信息的keys，比如 [&#x27;ClusterID&#x27;, &#x27;ClusterName&#x27;, &#x27;SCT_snn_res_0_8&#x27;, &#x27;nCount_SCT&#x27;, &#x27;nCount_Spatial&#x27;, &#x27;nFeature_SCT&#x27;, &#x27;nFeature_Spatial&#x27;, &#x27;orig_ident&#x27;, &#x27;seurat_clusters&#x27;, &#x27;imagecol&#x27;, &#x27;imagerow&#x27;&#x27;]</span></span><br><span class="line">adata.obs_names  <span class="meta"># 返回细胞ID 数据类型是object</span></span><br><span class="line">adata.<span class="keyword">var</span>.index  <span class="meta"># 返回基因 数据类型是object</span></span><br><span class="line">adata.var_names.to_list()  <span class="meta"># 返回基因 数据类型是list</span></span><br><span class="line">adata.obs.head() <span class="meta"># 查看前5行的数据</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 其他的数据组成也可以使用</span></span><br></pre></td></tr></table></figure>
+
+<p>数据的索引和取切片等操作参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f2356f59b6e6">numpy</a>和<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/926d819406ca">pandas</a>。</p>
+
+</article>
+    
+    
+
+</div>
+<div id="post-next-prev" class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2023/08/08/Dictys-%E5%8A%A8%E6%80%81%E5%9F%BA%E5%9B%A0%E8%B0%83%E6%8E%A7%E7%BD%91%E7%BB%9C%E5%89%96%E6%9E%90%E5%8D%95%E7%BB%86%E8%83%9E%E5%A4%9A%E7%BB%84%E5%AD%A6%E7%9A%84%E5%8F%91%E8%82%B2%E8%BF%9E%E7%BB%AD%E4%BD%93/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    未分类
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/08/08/Dictys-%E5%8A%A8%E6%80%81%E5%9F%BA%E5%9B%A0%E8%B0%83%E6%8E%A7%E7%BD%91%E7%BB%9C%E5%89%96%E6%9E%90%E5%8D%95%E7%BB%86%E8%83%9E%E5%A4%9A%E7%BB%84%E5%AD%A6%E7%9A%84%E5%8F%91%E8%82%B2%E8%BF%9E%E7%BB%AD%E4%BD%93/" class="trm-anima-link">
+                    Dictys:动态基因调控网络剖析单细胞多组学的发育连续体
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/08/08</li>
+                <li>14:11</li>
+                
+                    <li>191</li>
+                
+                
+                    <li>1</li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2023/08/06/%E5%8D%95%E7%BB%86%E8%83%9E%E5%A4%9A%E7%BB%84%E5%AD%A6%E6%89%80%E9%9C%80%E7%9A%84scRNA%E9%83%A8%E5%88%86%E5%A4%84%E7%90%86/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E7%94%9F%E4%BF%A1/">
+                    生信
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/08/06/%E5%8D%95%E7%BB%86%E8%83%9E%E5%A4%9A%E7%BB%84%E5%AD%A6%E6%89%80%E9%9C%80%E7%9A%84scRNA%E9%83%A8%E5%88%86%E5%A4%84%E7%90%86/" class="trm-anima-link">
+                    单细胞多组学所需的scRNA部分处理
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/08/06</li>
+                <li>21:58</li>
+                
+                    <li>372</li>
+                
+                
+                    <li>2</li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                  <div class="trm-divider footer-divider"></div>
+
+                  <!-- footer -->
+                  <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2023- 2023</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">Yessenia</span>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v6.3.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.0.9
+            </span>
+        </div>
+      
+
+    
+        <div class="trm-footer-item">
+            博客已在对莫弈的喜爱中运行 <span id="since" class="trm-accent-color"></span> 天
+        </div>
+     
+
+     
+</footer>
+
+<script>
+    function show_date_time () {
+        var BirthDay = new Date("08/07/2023 17:00:00");
+        var today = new Date();
+        var timeold = (today.getTime() - BirthDay.getTime());
+        var msPerDay = 24 * 60 * 60 * 1000
+        var day = Math.floor(timeold / msPerDay)
+        since.innerHTML = day
+    }
+    show_date_time()
+</script>
+ 
+                  <!-- footer end -->
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!--live2d moc3导入-->
+<script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js,npm/pixi.js@6.5.2/dist/browser/pixi.min.js,npm/pixi-live2d-display/dist/index.min.js,gh/Weidows-projects/Live2dLoader/dist/Live2dLoader.min.js"></script>
+<script>
+addEventListener("DOMContentLoaded", function () {
+  let models = [
+    {
+      width: 1980,
+      height: 200,
+      left: "10px",
+      bottom: "0px",
+      role: "https://cdn.jsdelivr.net/gh/YesseniaCQ/img/live2d/DLK-SJ4/DLK-SJ4.model3.json",
+      background: "",
+      opacity: 1,
+      mobile: false,
+      draggable: false,
+    }
+  ];
+  new Live2dLoader(models);
+});
+</script>
+</body>
+
+</html>
+            <!-- body end -->
+
+            <div class="trm-fixed-container" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://npm.elemecdn.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="https://unpkg.com/hexo-theme-async@2.0.9/source/js/plugins/typing.js?v=2.0.9"></script>
+    
+
+    
+        
+<script src="https://npm.elemecdn.com/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+
+        <script src="https://unpkg.com/hexo-theme-async@2.0.9/source/js/plugins/local_search.js?v=2.0.9"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="https://npm.elemecdn.com/katex@latest/dist/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="https://npm.elemecdn.com/katex@latest/dist/contrib/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="https://npm.elemecdn.com/katex@latest/dist/contrib/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <script>
+        "serviceWorker" in navigator ?
+        navigator.serviceWorker.register('/sw.js').then(function () {
+            navigator.serviceWorker.controller ? 
+             console.log("Assets cached by the controlling service worker.") :
+             console.log("Please reload this page to allow the service worker to handle network operations.")
+        }).catch(function (e) {
+            console.log("ERROR: " + e)
+        }) : console.log("Service workers are not supported in the current browser.")
+    </script>
+
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="https://unpkg.com/hexo-theme-async@2.0.9/source/js/main.js?v=2.0.9"></script>
+
+</body>
+
+</html>
