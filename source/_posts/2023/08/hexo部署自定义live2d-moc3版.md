@@ -10,6 +10,8 @@ tags:
 
 在你的主题或需要live2d的页面里插入。主题的话看看说明文档，哪个文件是用来进行整体页面搭建的，改就完事了（最好是提供了自定义功能的主题）
 
+我这个Async主题是插入main.ejs（需要自己建立，为什么？详见[主题配置 | Hexo-Theme-Async](https://hexo-theme-async.imalun.com/guide/config.html#自定义模板-layout)）
+
 ```html
 <!--live2d moc3导入-->
 <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>

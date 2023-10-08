@@ -32,13 +32,15 @@ tags:
 
 1. 引用相关css和js
 
-   1. hexo直接安装模块hexo-tag-videojs
+   两种情况
+
+   1. **hexo框架**，比如博客，直接安装模块hexo-tag-videojs，我是博客所以选这个
 
       ```bash
       npm install hexo-tag-videojs --save
       ```
 
-   2. 其他网页直接引用
+   2. **独立网页**需要引用
 
       ```html
       <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
@@ -64,7 +66,7 @@ tags:
    > 可以插入多个source
 
    后面应该需要跟个js，虽然官方文档说video或data-setup里设置了就不用，但我尝试的结果是不可缺少
-   
+
    ```html
    <script>
        var myVideo = videojs('welcomeVideo', {
@@ -73,8 +75,8 @@ tags:
          preload: 'auto',
          autoplay: true,
        });
-</script>
+   </script>
    ```
-   
+
    最后附上[官方文档](https://gitcode.gitcode.host/docs-cn/video.js-docs-cn/docs/guides/setup.html)
 

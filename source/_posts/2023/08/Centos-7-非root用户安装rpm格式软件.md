@@ -2,11 +2,6 @@
 title: Centos 7 非root用户安装rpm格式软件
 date: 2023-08-06 19:18:54
 cover: [https://www.logosc.cn/uploads/resources/2018/11/29/1543459457_thumb.jpg]
-sticky: 10
-banner: 
-  type: video
-  bgurl: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/迷弭惊鸟-2/迷弭惊鸟-2.m3u8
-  bannerText: I'm stay with you.
 ---
 
 

@@ -12,6 +12,8 @@
     "version": "6.3.0"
   },
   "dependencies": {
+    "bindings": "^1.5.0",
+    "colors": "^1.4.0",
     "dependencies": "0.0.1",
     "hexo": "^6.3.0",
     "hexo-deployer-git": "^4.0.0",
@@ -29,7 +31,8 @@
     "hexo-tag-videojs": "0.0.5",
     "hexo-theme-async": "^2.0.9",
     "hexo-theme-landscape": "^1.0.0",
-    "hexo-wordcount": "^6.0.1"
+    "hexo-wordcount": "^6.0.1",
+    "nan": "^2.18.0"
   },
   "devDependencies": {
     "msw": "^1.2.3"

@@ -18,15 +18,17 @@ tags: git
 
 ![img](https://pic1.zhimg.com/80/v2-eb7996c6e5b98e42cb36f188f397270c_720w.webp)
 
-> 下载完成后将Git LFS的路径加不加入全局变量应该不重要，如果不能用可以试着加一下（这一步我没做，看起来像是linux，powershell或git不知道能不能用）
+> 下载完成后将Git LFS的路径加不加入全局变量应该不重要，如果不能用可以试着加一下（这一步我没做）
 >
 > ```text
 > vim ~/.zprofile
 > #按i键进入编辑模式，将Git LFS的路径export
 > #按Esc键退出编辑模式，输入:wq并按Enter键保存编辑
 > ```
->如下图所示（参考的教程中）
->![img](https://pic1.zhimg.com/80/v2-f5891f337e28e7df46d54638a6e73584_720w.webp)
+> 实际如下图所示（参考的教程中）
+> ![img](https://pic1.zhimg.com/80/v2-f5891f337e28e7df46d54638a6e73584_720w.webp)
+>
+> 或者可以直接在环境变量-用户变量里加。
 
 ## 配置git lfs，连接git仓库，上传文件
 
