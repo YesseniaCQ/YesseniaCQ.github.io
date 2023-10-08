@@ -1,0 +1,20 @@
+# 将要覆盖的语言
+en:
+    site:
+        title: Site Information
+
+zh-Hans:
+    site:
+        title: 本站信息
+# 你也可以扩展其他语言
+
+footer:
+  powered: '由 %s 驱动'
+  theme: 主题
+  tips: '博客已运行 %s 天, %s 时, %s分, %s秒'
+  day: 天
+  hour: 时
+  minute: 分
+  seconds: 秒
+
+  

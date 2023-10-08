@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="<%- config.language %>">
+
+<head>
+  <%- partial('./_partial/head') %>
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <%- partial(theme.layout.page_loading) %>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <%- partial(theme.layout.mode_change) %>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <%- partial(theme.layout.header) %>
+            <!-- top bar end -->
+
+            <!-- body -->
+            <%- body %>
+            <!-- body end -->
+
+            <%- partial(theme.layout.fixed_btn) %>
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  <%- partial('./_widget/search') %>
+  <%- partial('./_partial/script') %>
+
+<script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js,npm/pixi.js@6.5.2/dist/browser/pixi.min.js,npm/pixi-live2d-display/dist/index.min.js,gh/Weidows-projects/Live2dLoader/dist/Live2dLoader.min.js"></script>
+<script>
+addEventListener("DOMContentLoaded", function () {
+  let models = [
+    {
+      width: 1280,
+      height: 768,
+      left: "0px",
+      bottom: "0px",
+      role: "https://cdn.jsdelivr.net/gh/alg-wiki/AzurLaneL2DViewer@gh-pages/assets/bisimai_2/bisimai_2.model3.json",
+      background: "",
+      opacity: 1,
+      mobile: false,
+      draggable: true,
+    },
+    {
+      width: 800,
+      height: 600,
+      right: "0px",
+      bottom: "0px",
+      role: "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json",
+      background: "",
+      opacity: 0.7,
+    },
+  ];
+  new Live2dLoader(models);
+});
+</script>
+</body>
+
+</html>

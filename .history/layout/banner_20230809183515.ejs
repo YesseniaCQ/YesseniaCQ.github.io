@@ -1,0 +1,18 @@
+<script src="https://cdn.jsdelivr.net/gh/YesseniaCQ/img"></script>
+<video id="video" controls loop="false" width="100%"></video>
+<script>
+  var video = document.getElementById('video');
+  if(Hls.isSupported()) {
+  var hls = new Hls();
+  hls.loadSource('m3u8视频地址');
+  hls.attachMedia(video);
+  hls.on(Hls.Events.MANIFEST_PARSED,function() {
+  video.play();
+});
+} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+  video.src = 'm3u8视频地址';
+  video.addEventListener('loadedmetadata',function() {
+  video.play();
+});
+}
+</script>

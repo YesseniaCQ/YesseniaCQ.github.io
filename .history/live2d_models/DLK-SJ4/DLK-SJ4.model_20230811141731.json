@@ -1,0 +1,39 @@
+{ // 默认配置文件，这里用我用的100034_baozaifan为例
+    "expression":[ // /模型/expression文件夹内的各文件
+        {
+            "file":"expression/chijing.exp.json",
+            "name":"chijing.exp.json"
+        },
+        {
+            "file":"expression/haixiu.exp.json",
+            "name":"haixiu.exp.json"
+        },
+        {
+            "file":"expression/kaixin.exp.json",
+            "name":"kaixin.exp.json"
+        },
+        {
+            "file":"expression/idle.exp.json",
+            "name":"idle.exp.json"
+        },
+        {
+            "file":"expression/nanguo.exp.json",
+            "name":"nanguo.exp.json"
+        },
+        {
+            "file":"expression/shengqi.exp.json",
+            "name":"shengqi.exp.json"
+        },
+        {
+            "file":"expression/wunai.exp.json",
+            "name":"wunai.exp.json"
+        }
+    ],
+    "model":"DLK-SJ4.moc3", // /模型文件夹的model.moc文件
+
+    "textures":[ // /模型文件夹内的texture文件
+        "texture_00.png"
+    ],
+	"physics":"moc/physics.json", // /模型/moc文件夹的physics文件
+    "version":"Sample 1.0.0"
+}

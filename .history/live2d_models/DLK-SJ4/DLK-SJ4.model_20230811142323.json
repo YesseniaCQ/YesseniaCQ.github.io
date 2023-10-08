@@ -1,0 +1,26 @@
+{ 
+    "expression":[ 
+        {
+            "file":"expression/DLK-犯困3.motion3.json",
+            "name":"DLK-犯困3.motion3.json"
+        },
+        {
+            "file":"expression/DLK-看手手.motion3.json",
+            "name":"DLK-看手手.motion3.json"
+        },
+        {
+            "file":"expression/DLK-垮起个批脸.motion3.json",
+            "name":"DLK-垮起个批脸.motion3.json"
+        },
+        {
+            "file":"expression/DLK-生气.motion3.json",
+            "name":"DLK-生气.motion3.json"
+        }
+    ],
+    "model":"DLK-SJ4.moc3", 
+
+    "textures":[ 
+        "texture_00.png"
+    ],
+	"physics":"moc/DLK-SJ4.physics3.json"
+}

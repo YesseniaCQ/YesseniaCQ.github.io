@@ -1,0 +1,14 @@
+favicon:
+    logo: logo.svg
+    icon16: logo.svg
+    icon32: logo.svg
+    appleTouchIcon: apple-touch-icon.png
+    webmanifest: /site.webmanifest
+    visibilitychange: true
+    hidden: failure.ico
+    showText: (/≧▽≦/)咦！又好了！
+    hideText: (●—●)等你回来哦
+
+assets:
+    internal_provider: local # local | unpkg | jsdelivr
+    third_party_provider: unpkg # unpkg | jsdelivr

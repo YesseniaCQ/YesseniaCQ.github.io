@@ -1,0 +1,29 @@
+favicon:
+    logo: logo.svg
+    icon16: logo.svg
+    icon32: logo.svg
+    appleTouchIcon: apple-touch-icon.png
+    webmanifest: /site.webmanifest
+    visibilitychange: true
+    hidden: failure.ico
+    showText: 
+    hideText: (●—●)等你回来哦
+
+assets:
+    internal_provider: unpkg # local（不使用） | unpkg | jsdelivr
+    third_party_provider: https://npm.elemecdn.com # unpkg | jsdelivr #可以使用第三方
+
+sidebar:
+    social: # 社交地址
+        - name: github
+          icon: fab fa-github
+          url: https://github.com
+        - name: gitee
+          icon: iconfont cg-gitee
+          url: https://gitee.com
+        - name: lofter
+          icon: fas fa-snowboarding
+          url: https://xingyelaixin.lofter.com/
+          
+        typedTextPrefix: I`m
+        typedText: ["Web Developer"]

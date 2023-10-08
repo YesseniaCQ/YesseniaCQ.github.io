@@ -1,0 +1,10 @@
+favicon:
+    logo: logo.svg
+    icon16: logo.svgfavicon-16x16.png
+    icon32: logo.favicon-32x32.png
+    appleTouchIcon: apple-touch-icon.png
+    webmanifest: /site.webmanifest
+    visibilitychange: true
+    hidden: failure.ico
+    showText: (/≧▽≦/)咦！又好了！
+    hideText: (●—●)喔哟，崩溃啦！

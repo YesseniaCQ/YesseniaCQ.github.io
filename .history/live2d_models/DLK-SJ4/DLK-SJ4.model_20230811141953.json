@@ -1,0 +1,39 @@
+{ // 默认配置文件，这里用我用的100034_baozaifan为例
+    "expression":[ // /模型/expression文件夹内的各文件
+        {
+            "file":"expression/DLK-犯困3.motion3.json",
+            "name":"DLK-犯困3.motion3.json"
+        },
+        {
+            "file":"expression/DLK-犯困3.motion3.json",
+            "name":"DLK-犯困3.motion3.json"
+        },
+        {
+            "file":"expression/DLK-犯困3.motion3.json",
+            "name":"DLK-犯困3.motion3.json"
+        },
+        {
+            "file":"expression/DLK-犯困3.motion3.json",
+            "name":"DLK-犯困3.motion3.json"
+        },
+        {
+            "file":"expression/DLK-犯困3.motion3.json",
+            "name":"DLK-犯困3.motion3.json"
+        },
+        {
+            "file":"expression/DLK-犯困3.motion3.json",
+            "name":"DLK-犯困3.motion3.json"
+        },
+        {
+            "file":"expression/wunai.exp.json",
+            "name":"wunai.exp.json"
+        }
+    ],
+    "model":"DLK-SJ4.moc3", // /模型文件夹的model.moc文件
+
+    "textures":[ // /模型文件夹内的texture文件
+        "texture_00.png"
+    ],
+	"physics":"moc/DLK-SJ4.physics3.json", // /模型/moc文件夹的physics文件
+    "version":"Sample 1.0.0"
+}

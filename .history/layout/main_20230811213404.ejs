@@ -1,0 +1,55 @@
+<div class="trm-content-start">
+  <!-- banner -->
+  <%- banner %>
+  <!-- banner end -->
+  <div class="container">
+      <div class="row">
+          <% if(!page.single_column) { %>
+              <div id="page-sidebar" class="col-lg-4 hidden-sm">
+                  <!-- main card -->
+                  <%- partial(theme.layout.sidebar) %>
+                  <!-- main card end -->
+              </div>
+          <% } %>
+          <div id="page-content" class="<%- !page.single_column ? 'col-lg-8':'col-lg-12' %>">
+              <div class="trm-content" id="trm-content">
+                  <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                  <%- content %>
+
+                  <div class="trm-divider footer-divider"></div>
+
+                  <!-- footer -->
+                  <%- partial(theme.layout.footer) %>
+                  <!-- footer end -->
+
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!--live2d moc3导入-->
+<script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+<script src="https://cdn.jsdelivr.net/combine/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js,npm/pixi.js@6.5.2/dist/browser/pixi.min.js,npm/pixi-live2d-display/dist/index.min.js,gh/Weidows-projects/Live2dLoader/dist/Live2dLoader.min.js"></script>
+<script>
+addEventListener("DOMContentLoaded", function () {
+  let models = [
+    {
+      width: 600,
+      height: 300,
+      left: "0px",
+      bottom: "0px",
+      role: "https://cdn.jsdelivr.net/gh/YesseniaCQ/img/live2d/乌梢5.12免费版/乌梢5.12免费版.model3.json",
+      background: "",
+      opacity: 1,
+      mobile: false,
+      draggable: true,
+    }
+  ];
+  new Live2dLoader(models);
+});
+</script>
+</body>
+
+</html>

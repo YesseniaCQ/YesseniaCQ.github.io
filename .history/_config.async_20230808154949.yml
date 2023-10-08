@@ -1,0 +1,132 @@
+user:
+    name: Yessenia
+    first_name: 来信
+    last_name: 星夜
+    email: admin@imalun.com
+    domain: https://www.imalun.com
+    avatar: https://pic1.zhimg.com/80/v2-b40c6aeeced6da9931ce74640452425c_720w.webp
+    describe: 网站简介。
+    ruleText: 暂不接受个人博客以外的友链申请，确保您的网站内容积极向上，文章至少30篇，原创70%以上，部署HTTPS。
+
+banner:
+    index:
+        type: video
+        bgurl: https://download.cloud.189.cn/file/downloadFile.action?dt=51&expired=1691490946987&play=1&sk=5a8b8045-5861-488b-a3f8-9b3b4d06fbb1&ufi=42356181655036977&zyc=180&token=cloud14&sig=y8qwmTOuRoJUhO0RAAHtIdXDESs%3D
+        bannerTitle: 欢迎来到，<br>铺星小筑。
+        bannerText: Hi my new friend!
+
+favicon:
+    logo: logo.svg
+    icon16: logo.svg
+    icon32: logo.svg
+    appleTouchIcon: apple-touch-icon.png
+    webmanifest: /site.webmanifest
+    visibilitychange: true
+    hidden: failure.ico
+    showText: 
+    hideText: (●—●)等你回来哦
+
+assets:
+    internal_provider: unpkg # local（不使用） | unpkg | jsdelivr
+    third_party_provider: https://npm.elemecdn.com # unpkg | jsdelivr #可以使用第三方
+    
+
+top_bars:
+    - title: 首页
+      url: /
+      children:
+          - title: archives2
+            url: /archives2/
+    - title: 归档
+      url: /archives/
+    - title: 分类
+      url: /categories/
+    - title: 标签
+      url: /tags/
+
+sidebar:
+    typedTextPrefix: A
+    typedText: ["little space of my"]
+    social: # 社交地址
+        - name: github
+          icon: fab fa-github
+          url: https://github.com
+        - name: gitee
+          icon: iconfont cg-gitee
+          url: https://gitee.com
+        - name: lofter
+          icon: fas fa-snowboarding
+          url: https://xingyelaixin.lofter.com/
+    info: # 个人信息
+        - key: 地址
+          val: 
+        - key: 年龄
+          val: 18
+
+
+toc:
+    enable: true
+    list_number: true
+    max_depth: 3
+    min_depth: 1
+
+
+layout:
+    path: layout
+
+footer:
+  powered:
+    enable: true
+  beian:
+    enable: false
+    icp: 
+  copyrightYear: 2023
+  live_time:
+    enable: true
+    prefix: footer.tips
+    start_time: 08/07/2023 17:00:00
+  custom_text:
+
+categorie_card:
+    enable: true
+    len: 2
+    list: ["生信", "分类2"]
+
+#右下角悬浮按钮块
+rightside:
+    readmode: true
+    aside: true
+
+datetime_foramt:
+    post_card:
+        date: YY/MM/DD
+        time: HH:mm
+    post_info:
+        date: MM/DD
+        time: HH:mm
+    archive:
+        date: MM/DD
+        time: HH:mm
+
+highlight:
+    theme: true
+    title: default
+    copy: true
+    lang: true
+    code_word_wrap: fasle
+    height_limit: 200 # 超出时，显示折叠按钮
+
+wordcount:
+    enable: true
+    count: true
+    time: true
+
+webAnalytics:  
+  enable: true
+  baidu:  百度统计Key
+
+search:
+  enable: true
+  type: local
+  preload: true
+  trigger: auto

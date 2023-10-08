@@ -1,0 +1,13 @@
+// source/_data/style/dark.less
+@primary: #6062ce;
+@primary-weak: #7a89df;
+
+.var-theme(@body-color: #7B7B7D; @body-bg-color: #00151f; @theme-color: #00283a; @theme-bg-color: #f2f6fc; @theme-bg2-color: #e6eaf2) {
+    --body-color       : @body-color;
+    --body-color-5     : fade(@body-color, 5%);
+    --body-bg-color    : @body-bg-color;
+    --theme-color      : @theme-color;
+    --theme-bg-color   : @theme-bg-color;
+    --theme-bg-color-80: fade(@theme-bg-color, 80%);
+    --theme-bg2-color  : @theme-bg2-color;
+}

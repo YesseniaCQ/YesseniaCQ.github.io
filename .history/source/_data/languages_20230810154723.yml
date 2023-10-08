@@ -1,0 +1,27 @@
+# 将要覆盖的语言
+en:
+    
+
+zh-Hans:
+    footer:
+        powered: '由 %s 驱动'
+        theme: 主题
+        tips: '博客已在对莫弈的喜爱中运行 %s 天'
+        day: 天
+        hour: 时
+        minute: 分
+        seconds: 秒
+    title:
+        links: 友情链接
+        new_publish: 最近发布
+        comment: 留言板
+        author: 作者
+        blog: 博客
+        privacy: 隐私权及注意点
+        more: 查看分类
+        all_archives: 所有归档
+        year_archives: '%s 年的归档'
+        other_articles: 其他文章
+        unclassified: 未分类
+            
+

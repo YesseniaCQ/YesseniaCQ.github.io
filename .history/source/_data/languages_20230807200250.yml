@@ -1,0 +1,9 @@
+footer:
+  powered: '由 %s 驱动'
+  theme: 主题
+  tips: '博客已运行 %s 天, %s 时, %s分, %s秒'
+  day: 天
+  hour: 时
+  minute: 分
+  seconds: 秒
+

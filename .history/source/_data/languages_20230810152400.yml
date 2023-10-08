@@ -1,0 +1,14 @@
+# 将要覆盖的语言
+en:
+    
+
+zh-Hans:
+    footer:
+        powered: '由 %s 驱动'
+        theme: 主题
+        tips: '博客已在对莫弈的喜爱中运行 %s 天'
+        day: 天
+        hour: 时
+        minute: 分
+        seconds: 秒
+

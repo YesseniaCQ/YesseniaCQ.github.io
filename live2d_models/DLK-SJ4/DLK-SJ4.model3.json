@@ -1,0 +1,107 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "DLK-SJ4.moc3",
+    "Textures": [
+      "DLK-SJ4.2048/texture_00.png"
+    ],
+    "Physics": "DLK-SJ4.physics3.json",
+    "PhysicsV2": {
+      "File": "DLK-SJ4.physics3.json"
+    },
+    "Motions": {
+      "Tap犯困": [
+        {
+          "File": "DLK-犯困3.motion3.json"
+        }
+      ],
+      "Tap看手手": [
+        {
+          "File": "DLK-看手手.motion3.json"
+        },
+        {
+          "File": "DLK-垮起个批脸.motion3.json"
+        }
+      ],
+      "Tap不屑": [
+        {
+          "File": "DLK-生气.motion3.json"
+        }
+      ],
+      "Shake": [
+        {
+          "File": "DLK-生气.motion3.json"
+        }
+      ]
+    }
+  },
+  "Controllers": {
+    "ParamHit": {},
+    "ParamLoop": {},
+    "KeyTrigger": {},
+    "ParamTrigger": {},
+    "AreaTrigger": {},
+    "EyeBlink": {
+      "MinInterval": 500,
+      "MaxInterval": 6000,
+      "Items": [
+        {
+          "Id": "ParamEyeLOpen",
+          "Min": 0.0,
+          "Max": 1.0,
+          "BlendMode": 2,
+          "Input": 0
+        }
+      ],
+      "Enabled": true
+    },
+    "LipSync": {
+      "Gain": 5.0
+    },
+    "MouseTracking": {
+      "SmoothTime": 0.15,
+      "Enabled": true
+    },
+    "AutoBreath": {
+      "Enabled": true
+    },
+    "ExtraMotion": {
+      "Enabled": true
+    },
+    "Accelerometer": {
+      "Enabled": true
+    },
+    "Microphone": {},
+    "Transform": {},
+    "FaceTracking": {
+      "Enabled": true
+    },
+    "ParamValue": {},
+    "PartOpacity": {},
+    "ArtmeshOpacity": {},
+    "ArtmeshColor": {},
+    "ArtmeshCulling": {
+      "DefaultMode": 0
+    },
+    "IntimacySystem": {}
+  },
+  "HitAreas": [
+    {
+      "Name": "犯困",
+      "Id": "ArtMesh20"
+    },
+    {
+      "Name": "看手手",
+      "Id": "ArtMesh21"
+    },
+    {
+      "Name": "不屑",
+      "Id": "ArtMesh10"
+    },
+    {
+      "Name": "生气",
+      "Id": "ArtMesh22"
+    }
+  ],
+  "Options": {}
+}
