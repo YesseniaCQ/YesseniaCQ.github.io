@@ -15,7 +15,7 @@
 <meta property="og:description" content="在Hexo博客中，出现Cannot GET&#x2F;xxx错误便意味着xxx文件未被找到。Cannot GET&#x2F;xxx错误本质是hexo server返回的一个404错误。 因此，排查方式如下：  判断public目录下xxx文件是否存在。（我的错误是 Cannot GET &#x2F;，因此在public目录下寻找index.html是否存在。）  如果说index.html不存在，">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-08-06T13:52:08.000Z">
-<meta property="article:modified_time" content="2023-10-08T07:10:20.446Z">
+<meta property="article:modified_time" content="2023-10-09T11:39:41.139Z">
 <meta property="article:author" content="YesseniaCQ">
 <meta name="twitter:card" content="summary">
 
@@ -68,7 +68,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"YesseniaCQ","root":"/","typed_text":["little space of my"],"theme_version":"2.0.9","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"logo.svg","icon16":"logo.svg","icon32":"logo.svg","appleTouchIcon":"apple-touch-icon.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","showText":"","hideText":"(●—●)等你回来哦"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":200},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"preload":true,"trigger":"auto","path":"search.xml"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-10-08 15:10:20"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-10-09 19:39:41"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.0.9" id="trm-switch-style">
@@ -414,7 +414,7 @@
             </div>
             <div name="tabs-toc" class="trm-tabs-item active">
                 <div class="post-toc">
-    <ol class="toc"><li class="toc-item toc-level-3"><a rel="nofollow" class="toc-link" href="#总结下来的构建方式"  data-scroll-to="#总结下来的构建方式"><span class="toc-number">1.</span> <span class="toc-text">总结下来的构建方式</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a rel="nofollow" class="toc-link" href="#总结下来的第一次构建方式"  data-scroll-to="#总结下来的第一次构建方式"><span class="toc-number">1.</span> <span class="toc-text">总结下来的第一次构建方式</span></a></li></ol>
 </div>
             </div>
         </div>
@@ -460,20 +460,23 @@
 <li><p>步骤2执行完后index.html仍不存在，执行<code>npm audit fix</code></p>
 </li>
 </ol>
-  <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  $ npm audit fix</span><br><span class="line">  npm ERR! code ELOCKVERIFY</span><br><span class="line">  npm ERR! Errors were found <span class="keyword">in</span> your package-lock.json, run  npm install  to fix them. #如果有直接告诉可能的修法，先尝试。</span><br><span class="line">  npm ERR!     Missing: hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span> #缺少的组件</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found <span class="keyword">in</span>:</span><br><span class="line">npm ERR!     D:\tools\blog\node.js\node_cache\_logs\<span class="number">2023</span>-<span class="number">08</span>-<span class="number">06</span>T08_58_55_270Z-debug.log</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ npm audit fix</span><br><span class="line">npm ERR! code ELOCKVERIFY</span><br><span class="line">npm ERR! Errors were found <span class="keyword">in</span> your package-lock.json, run  npm install  to fix them. #如果有直接告诉可能的修法，先尝试。</span><br><span class="line">npm ERR!     Missing: hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span> #缺少的组件</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>有几点需要看：<br>    1. 如果有直接告诉可能的修法，先尝试。<br>     2. 查看是否少了什么组件，通过npm install hexo-xxx-xxx 安装试试。（如上述报错，hexo缺少了hexo-renderer-marked组件，因此执行npm install hexo-renderer-marke）<br>     3. 组件安装失败可以试试用cnpm安装</p>
-</blockquote>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hexo-renderer-marked --save #虽然还是有报错，但index.html生成了</span><br></pre></td></tr></table></figure>
-
+<p>npm ERR! A complete log of this run can be found in:<br>npm ERR!     D:\tools\blog\node.js\node_cache_logs\2023-08-06T08_58_55_270Z-debug.log<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; 有几点需要看：</span><br><span class="line">	1. 如果有直接告诉可能的修法，先尝试。</span><br><span class="line"> 	2. 查看是否少了什么组件，通过npm install hexo-xxx-xxx 安装试试。（如上述报错，hexo缺少了hexo-renderer-marked组件，因此执行npm install hexo-renderer-marke）</span><br><span class="line"> 	3. 组件安装失败可以试试用cnpm安装</span><br><span class="line"></span><br><span class="line">​```bat</span><br><span class="line">cnpm install hexo-renderer-marked --save #虽然还是有报错，但index.html生成了</span><br></pre></td></tr></table></figure></p>
 <ol start="4">
 <li>步骤3完成之后，执行hexo c，hexo g重新生成静态文件。</li>
 </ol>
-<h3 id="总结下来的构建方式"><a href="#总结下来的构建方式" class="headerlink" title="总结下来的构建方式"></a>总结下来的构建方式</h3><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx hexo int</span><br><span class="line">cnpm install</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<p>如果有啥模块没被找到，<code>npm install</code> 一下，如果说生成package.json的npm版本低，需要把当前版本降级</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> npm@<span class="number">6</span></span><br></pre></td></tr></table></figure>
 
+<p>再报错就<code>cnpm install</code> 或<code>cnpm install pkgname</code>  或  <code>cnpm install pkgname -g</code>（不报错就停）（我估计多电脑操作时两台电脑的npm版本不同，导致根据package.json进行cnpm时装不上一些基础包）</p>
+<h3 id="总结下来的第一次构建方式"><a href="#总结下来的第一次构建方式" class="headerlink" title="总结下来的第一次构建方式"></a>总结下来的第一次构建方式</h3><figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo int</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果hexo g没有生成index，可以cnpm install</p>
+</blockquote>
 <p>或</p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npx hexo init</span><br><span class="line">npm install dependencies</span><br><span class="line">npm audit fix#查看缺少什么模块</span><br><span class="line">cnpm install hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span></span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br><span class="line">npm install dependencies</span><br><span class="line">npm audit fix#查看缺少什么模块</span><br><span class="line">cnpm install hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span></span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
 
 
 </article>

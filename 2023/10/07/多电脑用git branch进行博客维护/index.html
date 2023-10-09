@@ -7,15 +7,15 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta name="description" content="sssssss">
+<meta name="description" content="因为电脑有台式和笔记本，在不同的场景下进行博客记录的需求产生了，而且有些博文写一半也不好展示，幸好有git的多分支功能。 已有博客源文件的电脑上操作1. 对远程仓库新建分支，并克隆该分支到本地在Github的username.github.io仓库上新建一个main-&gt;developing分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Defau">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多电脑用git branch进行博客维护">
 <meta property="og:url" content="http://example.com/2023/10/07/%E5%A4%9A%E7%94%B5%E8%84%91%E7%94%A8git%20branch%E8%BF%9B%E8%A1%8C%E5%8D%9A%E5%AE%A2%E7%BB%B4%E6%8A%A4/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="sssssss">
+<meta property="og:description" content="因为电脑有台式和笔记本，在不同的场景下进行博客记录的需求产生了，而且有些博文写一半也不好展示，幸好有git的多分支功能。 已有博客源文件的电脑上操作1. 对远程仓库新建分支，并克隆该分支到本地在Github的username.github.io仓库上新建一个main-&gt;developing分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Defau">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-10-07T14:48:56.000Z">
-<meta property="article:modified_time" content="2023-10-08T15:32:47.344Z">
+<meta property="article:modified_time" content="2023-10-09T11:46:50.940Z">
 <meta property="article:author" content="YesseniaCQ">
 <meta name="twitter:card" content="summary">
 
@@ -68,7 +68,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"YesseniaCQ","root":"/","typed_text":["little space of my"],"theme_version":"2.0.9","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"logo.svg","icon16":"logo.svg","icon32":"logo.svg","appleTouchIcon":"apple-touch-icon.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","showText":"","hideText":"(●—●)等你回来哦"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":200},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"preload":true,"trigger":"auto","path":"search.xml"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-10-08 23:32:47"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-10-09 19:46:50"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.0.9" id="trm-switch-style">
@@ -327,7 +327,17 @@
 <div class="trm-main-card-frame trm-sidebar">
     <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
     
-        <!-- card header -->
+        <div class="trm-user-tabs" id="sidebar-tabs">
+           <div class="trm-tabs-nav trm-mb-40" id="trm-tabs-nav">
+                <div data-to="tabs-user" class="trm-tabs-nav-item">
+                    <i class="iconfont fas fa-user-alt"></i>
+                </div>
+                <div data-to="tabs-toc" class="trm-tabs-nav-item active">
+                    <i class="iconfont fas fa-th-list"></i>
+                </div>
+           </div>
+            <div name="tabs-user" class="trm-tabs-item">
+                <!-- card header -->
 <div class="trm-mc-header">
     <div class="trm-avatar-frame trm-mb-20">
         <img alt="Avatar" class="trm-avatar" src="https://pic1.zhimg.com/80/v2-b40c6aeeced6da9931ce74640452425c_720w.webp">
@@ -345,7 +355,7 @@
     
 </div>
 <!-- card header end -->
-        <!-- sidebar social -->
+                <!-- sidebar social -->
 
 <div class="trm-divider trm-mb-40 trm-mt-40"></div>
 <div class="trm-social">
@@ -365,7 +375,7 @@
 </div>
 
 <!-- sidebar social end -->
-        <!-- info -->
+                <!-- info -->
 <div class="trm-divider trm-mb-40 trm-mt-40"></div>
 <ul class="trm-table trm-mb-20">
     
@@ -390,7 +400,7 @@
 </ul>
 <!-- info end -->
 
-        
+                
     <div class="trm-divider trm-mb-40 trm-mt-40"></div>
     <!-- action button -->
     <div class="text-center">
@@ -401,6 +411,13 @@
     </div>
     <!-- action button end -->
 
+            </div>
+            <div name="tabs-toc" class="trm-tabs-item active">
+                <div class="post-toc">
+    <ol class="toc"><li class="toc-item toc-level-2"><a rel="nofollow" class="toc-link" href="#已有博客源文件的电脑上操作"  data-scroll-to="#已有博客源文件的电脑上操作"><span class="toc-number">1.</span> <span class="toc-text">已有博客源文件的电脑上操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a rel="nofollow" class="toc-link" href="#1-对远程仓库新建分支，并克隆该分支到本地"  data-scroll-to="#1-对远程仓库新建分支，并克隆该分支到本地"><span class="toc-number">1.1.</span> <span class="toc-text">1. 对远程仓库新建分支，并克隆该分支到本地</span></a></li><li class="toc-item toc-level-3"><a rel="nofollow" class="toc-link" href="#2-将博客源文件复制到username-github-io文件夹内，上传到分支备份"  data-scroll-to="#2-将博客源文件复制到username-github-io文件夹内，上传到分支备份"><span class="toc-number">1.2.</span> <span class="toc-text">2.将博客源文件复制到username.github.io文件夹内，上传到分支备份</span></a></li></ol></li><li class="toc-item toc-level-2"><a rel="nofollow" class="toc-link" href="#另一台电脑"  data-scroll-to="#另一台电脑"><span class="toc-number">2.</span> <span class="toc-text">另一台电脑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a rel="nofollow" class="toc-link" href="#1-基础node-js和hexo安装"  data-scroll-to="#1-基础node-js和hexo安装"><span class="toc-number">2.1.</span> <span class="toc-text">1. 基础node.js和hexo安装</span></a></li><li class="toc-item toc-level-3"><a rel="nofollow" class="toc-link" href="#2-配置远程仓库连接"  data-scroll-to="#2-配置远程仓库连接"><span class="toc-number">2.2.</span> <span class="toc-text">2. 配置远程仓库连接</span></a></li><li class="toc-item toc-level-3"><a rel="nofollow" class="toc-link" href="#3-在新电脑上克隆分支到本地"  data-scroll-to="#3-在新电脑上克隆分支到本地"><span class="toc-number">2.3.</span> <span class="toc-text">3. 在新电脑上克隆分支到本地</span></a></li></ol></li><li class="toc-item toc-level-2"><a rel="nofollow" class="toc-link" href="#协同时"  data-scroll-to="#协同时"><span class="toc-number">3.</span> <span class="toc-text">协同时</span></a></li></ol>
+</div>
+            </div>
+        </div>
     
     </div>
 </div>
@@ -434,8 +451,52 @@
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
     <p>因为电脑有台式和笔记本，在不同的场景下进行博客记录的需求产生了，而且有些博文写一半也不好展示，幸好有git的多分支功能。</p>
-<h4 id="对username-github-io仓库新建hexo分支，并克隆"><a href="#对username-github-io仓库新建hexo分支，并克隆" class="headerlink" title="对username.github.io仓库新建hexo分支，并克隆"></a>对username.github.io仓库新建hexo分支，并克隆</h4><p>在Github的username.github.io仓库上新建一个xxx分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Default branch中将默认分支设为xxx，save保存；然后将该仓库克隆到本地，进入该username.github.io文件目录。</p>
+<h2 id="已有博客源文件的电脑上操作"><a href="#已有博客源文件的电脑上操作" class="headerlink" title="已有博客源文件的电脑上操作"></a>已有博客源文件的电脑上操作</h2><h3 id="1-对远程仓库新建分支，并克隆该分支到本地"><a href="#1-对远程仓库新建分支，并克隆该分支到本地" class="headerlink" title="1. 对远程仓库新建分支，并克隆该分支到本地"></a>1. 对远程仓库新建分支，并克隆该分支到本地</h3><p>在Github的username.github.io仓库上新建一个main-&gt;developing分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Default branch中将默认分支设为developing，保存；</p>
+<p>然后copy ssh，在博客文件夹外的文件夹内git bash，将该仓库克隆到本地，进入该username.github.io文件目录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> ...</span><br><span class="line">git branch <span class="comment">#确认当前分支</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="2-将博客源文件复制到username-github-io文件夹内，上传到分支备份"><a href="#2-将博客源文件复制到username-github-io文件夹内，上传到分支备份" class="headerlink" title="2.将博客源文件复制到username.github.io文件夹内，上传到分支备份"></a>2.将博客源文件复制到username.github.io文件夹内，上传到分支备份</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;源文件备份&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>将themes目录以内中的主题的.git目录删除（如果有），因为一个git仓库中不能包含另一个git仓库，提交主题文件夹会失败。</li>
+<li>可能有人会问，删除了themes目录中的.git不就不能<code>git pull</code>更新主题了吗，很简单，需要更新主题时在另一个地方<code>git clone</code>下来该主题的最新版本，然后将内容拷到当前主题目录即可</li>
+<li>顺便主题能作为npm模块直接装最好，就没上述烦恼了</li>
+</ul>
+</blockquote>
+<p>master分支和developing分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问（hexo d直接推送就行，不用合并）；developing分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突</p>
+<h2 id="另一台电脑"><a href="#另一台电脑" class="headerlink" title="另一台电脑"></a>另一台电脑</h2><h3 id="1-基础node-js和hexo安装"><a href="#1-基础node-js和hexo安装" class="headerlink" title="1. 基础node.js和hexo安装"></a>1. 基础node.js和hexo安装</h3><ul>
+<li><p>最好装和老电脑一样的版本，特别是npm</p>
+<p>npm换版本</p>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install npm@<span class="number">6</span> <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置远程仓库连接"><a href="#2-配置远程仓库连接" class="headerlink" title="2. 配置远程仓库连接"></a>2. 配置远程仓库连接</h3><ul>
+<li><p>将新电脑的生成的ssh key添加到GitHub账户上</p>
+<p>在<strong>桌面</strong>右键-在powershell中运行</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;github用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;创建github的邮箱&quot;</span></span><br><span class="line"> <span class="comment"># 生成 ssh 密钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;创建github的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一般执行上述命令之后，会生成 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件，前者是我们私有的，而后者则是对外开放的。接着找到生成的 <code>.ssh</code> 的文件夹中的 id_rsa.pub 密钥，将内容复制；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub <span class="comment">#生成在哪个文件夹输出中有写，去那个文件夹下cat</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>去github账户–&gt;settings-SSH and GPG keys–&gt;New SSH key，粘贴就行，title可以命名成“hexo”</li>
+</ul>
+<h3 id="3-在新电脑上克隆分支到本地"><a href="#3-在新电脑上克隆分支到本地" class="headerlink" title="3. 在新电脑上克隆分支到本地"></a>3. 在新电脑上克隆分支到本地</h3><ul>
+<li><p>切换到username.github.io目录，执行<code>npm install</code>，不行就<code>cnpm install</code></p>
+<blockquote>
+<p>由于仓库有一个.gitignore文件，用来忽略不用备份的文件，里面默认是忽略掉 node_modules文件夹的，也就是说仓库的hexo分支并没有存储该目录（也不需要，可以自己根据package.json安装），所以需要install下</p>
+</blockquote>
+</li>
+<li><p>hexo s 看看有无报错，本地看看效果</p>
+</li>
+</ul>
+<h2 id="协同时"><a href="#协同时" class="headerlink" title="协同时"></a>协同时</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;xxx&quot;</span></span><br><span class="line">git pull</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 </article>
     
     
@@ -449,6 +510,41 @@
             <span data-number="02"></span>
         </h5>
     </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2023/10/09/%E7%A7%BB%E5%8A%A8%E8%BD%AF%E4%BB%B6%E5%90%8E%EF%BC%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%92%8C%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%9A%84%E6%9B%B4%E6%94%B9%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%8F%B3%E9%94%AE-%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F%E5%87%BA%E7%8E%B0%E6%97%A0%E6%95%88%E5%85%8B%E9%9A%86%E4%BD%93%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    未分类
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/10/09/%E7%A7%BB%E5%8A%A8%E8%BD%AF%E4%BB%B6%E5%90%8E%EF%BC%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%92%8C%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%9A%84%E6%9B%B4%E6%94%B9%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%8F%B3%E9%94%AE-%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F%E5%87%BA%E7%8E%B0%E6%97%A0%E6%95%88%E5%85%8B%E9%9A%86%E4%BD%93%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="trm-anima-link">
+                    移动软件后，环境变量和注册表的更改，以及右键-打开方式出现无效克隆体的解决方法
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/10/09</li>
+                <li>16:11</li>
+                
+                    <li>629</li>
+                
+                
+                    <li>2</li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
     
     
         <div class="col-lg-6">
@@ -476,10 +572,10 @@
                 <li>23/10/07</li>
                 <li>18:55</li>
                 
-                    <li>200</li>
+                    <li>644</li>
                 
                 
-                    <li>1</li>
+                    <li>2</li>
                 
             </ul>
         </div>

@@ -224,16 +224,17 @@
   <entry>
     <title>将hexo本地博客部署到github</title>
     <url>/2023/08/13/%E5%B0%86hexo%E6%9C%AC%E5%9C%B0%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0github/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;github用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;创建github的邮箱&quot;</span></span><br><span class="line"> <span class="comment"># 生成 ssh 密钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;创建github的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<p>在<strong>桌面</strong>右键-在powershell中运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;github用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;创建github的邮箱&quot;</span></span><br><span class="line"> <span class="comment"># 生成 ssh 密钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;创建github的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>一般执行上述命令之后，会生成 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件，前者是我们私有的，而后者则是对外开放的。接着找到生成的 <code>.ssh</code> 的文件夹中的 id_rsa.pub 密钥，将内容复制；</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub <span class="comment">#生成在哪个文件夹输出中有写，去那个文件夹下cat</span></span><br></pre></td></tr></table></figure>
 
-<p>去github账户-settings-SSH and GPG keys-New SSH key，粘贴就行，title可以命名成“hexo”</p>
+<p>去github账户–&gt;settings-SSH and GPG keys–&gt;New SSH key，粘贴就行，title可以命名成“hexo”</p>
 <p>然后去配置文件<code>_config.yml</code>中设置：</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/YesseniaCQ/YesseniaCQ.github.io.git</span> <span class="comment">#仓库链接</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
 
-<p>最后在git bash输入</p>
+<p>最后在博客文件夹的git bash中输入</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean  <span class="comment">#删除生成的文件和缓存</span></span><br><span class="line">hexo g      <span class="comment">#生成静态文件，也就是public文件夹</span></span><br><span class="line">hexo d      <span class="comment">#部署网站</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="hexo-d后出现报错？"><a href="#hexo-d后出现报错？" class="headerlink" title="hexo d后出现报错？"></a>hexo d后出现报错？</h3><p>“# ERROR Deployer not found: git” 原因：这是因为没安装<code>hexo-deployer-git</code>插件，在项目目录下运行以下命令安装即可：</p>
@@ -252,20 +253,23 @@
 <li><p>步骤2执行完后index.html仍不存在，执行<code>npm audit fix</code></p>
 </li>
 </ol>
-  <figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">  $ npm audit fix</span><br><span class="line">  npm ERR! code ELOCKVERIFY</span><br><span class="line">  npm ERR! Errors were found <span class="keyword">in</span> your package-lock.json, run  npm install  to fix them. #如果有直接告诉可能的修法，先尝试。</span><br><span class="line">  npm ERR!     Missing: hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span> #缺少的组件</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found <span class="keyword">in</span>:</span><br><span class="line">npm ERR!     D:\tools\blog\node.js\node_cache\_logs\<span class="number">2023</span>-<span class="number">08</span>-<span class="number">06</span>T08_58_55_270Z-debug.log</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">$ npm audit fix</span><br><span class="line">npm ERR! code ELOCKVERIFY</span><br><span class="line">npm ERR! Errors were found <span class="keyword">in</span> your package-lock.json, run  npm install  to fix them. #如果有直接告诉可能的修法，先尝试。</span><br><span class="line">npm ERR!     Missing: hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span> #缺少的组件</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>有几点需要看：<br>    1. 如果有直接告诉可能的修法，先尝试。<br>     2. 查看是否少了什么组件，通过npm install hexo-xxx-xxx 安装试试。（如上述报错，hexo缺少了hexo-renderer-marked组件，因此执行npm install hexo-renderer-marke）<br>     3. 组件安装失败可以试试用cnpm安装</p>
-</blockquote>
-<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-renderer-marked --save #虽然还是有报错，但index.html生成了</span><br></pre></td></tr></table></figure>
-
+<p>npm ERR! A complete log of this run can be found in:<br>npm ERR!     D:\tools\blog\node.js\node_cache_logs\2023-08-06T08_58_55_270Z-debug.log<br>  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">&gt; 有几点需要看：</span><br><span class="line">	1. 如果有直接告诉可能的修法，先尝试。</span><br><span class="line"> 	2. 查看是否少了什么组件，通过npm install hexo-xxx-xxx 安装试试。（如上述报错，hexo缺少了hexo-renderer-marked组件，因此执行npm install hexo-renderer-marke）</span><br><span class="line"> 	3. 组件安装失败可以试试用cnpm安装</span><br><span class="line"></span><br><span class="line">​```bat</span><br><span class="line">cnpm install hexo-renderer-marked --save #虽然还是有报错，但index.html生成了</span><br></pre></td></tr></table></figure></p>
 <ol start="4">
 <li>步骤3完成之后，执行hexo c，hexo g重新生成静态文件。</li>
 </ol>
-<h3 id="总结下来的构建方式"><a href="#总结下来的构建方式" class="headerlink" title="总结下来的构建方式"></a>总结下来的构建方式</h3><figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">npx hexo int</span><br><span class="line">cnpm install</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<p>如果有啥模块没被找到，<code>npm install</code> 一下，如果说生成package.json的npm版本低，需要把当前版本降级</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> npm@<span class="number">6</span></span><br></pre></td></tr></table></figure>
 
+<p>再报错就<code>cnpm install</code> 或<code>cnpm install pkgname</code>  或  <code>cnpm install pkgname -g</code>（不报错就停）（我估计多电脑操作时两台电脑的npm版本不同，导致根据package.json进行cnpm时装不上一些基础包）</p>
+<h3 id="总结下来的第一次构建方式"><a href="#总结下来的第一次构建方式" class="headerlink" title="总结下来的第一次构建方式"></a>总结下来的第一次构建方式</h3><figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">hexo int</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果hexo g没有生成index，可以cnpm install</p>
+</blockquote>
 <p>或</p>
-<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">npx hexo init</span><br><span class="line">npm install dependencies</span><br><span class="line">npm audit fix#查看缺少什么模块</span><br><span class="line">cnpm install hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span></span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<figure class="highlight bat"><table><tr><td class="code"><pre><span class="line">hexo init</span><br><span class="line">npm install dependencies</span><br><span class="line">npm audit fix#查看缺少什么模块</span><br><span class="line">cnpm install hexo-renderer-marked@^<span class="number">6</span>.<span class="number">0</span>.<span class="number">0</span></span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
 
 ]]></content>
   </entry>
@@ -329,20 +333,43 @@
   <entry>
     <title>hexo搭建blog</title>
     <url>/2023/10/07/hexo%E6%90%AD%E5%BB%BAblog/</url>
-    <content><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li><p>node.js安装</p>
-<p>版本必须&gt;10.13，安装地址：<a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a> ，一般装最新版应该没问题</p>
+    <content><![CDATA[<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="1-node-js安装"><a href="#1-node-js安装" class="headerlink" title="1. node.js安装"></a>1. node.js安装</h3><p>   版本必须&gt;10.13，安装地址：<a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a> ，一般装最新版应该没问题。除了安装位置自己选外，其他可以一直默认（环境变量会自动加上），但新电脑在最后一步 []Automatically…可以勾选。</p>
 <blockquote>
-<p>自带npm，如果后续npm装东西慢或者无效，可以从淘宝源装cnpm（用来替代npm）<br> <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> cnpm <span class="literal">--registry</span>=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure><br> 记得检查下版本</p>
+<p>自带npm，如果后续npm装东西慢或者无效，可以从淘宝源装cnpm（用来替代npm）<br>    <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> cnpm <span class="literal">--registry</span>=https://registry.npm.taobao.org <span class="comment">#-g是安装到全局环境，不加则安装到当前文件夹下的node_modules</span></span><br></pre></td></tr></table></figure><br>    记得检查下版本<br>    <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">node.js <span class="literal">-v</span></span><br><span class="line">npm <span class="literal">-v</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
- <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">node.js <span class="literal">-v</span></span><br><span class="line">npm <span class="literal">-v</span></span><br></pre></td></tr></table></figure>
+<h4 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h4><p>是很重要的一点，关系你的C盘红不红，当然C盘巨佬随意啦~</p>
+<ol>
+<li><p>查看当前全局包存储路径</p>
+ <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm root <span class="literal">-g</span> <span class="comment">#查看当前执行npm install -g XXXX时下载的全局包，默认存放路径</span></span><br><span class="line">npm config <span class="built_in">ls</span> <span class="comment">#查看npm基本配置</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>该路径通常为C:\Users\Administrator\AppData\Roaming\npm\node_modules，很多应用的数据都放在C:\Users\Administrator\AppData\Roaming下，所以如果应用数据太多导致C盘爆炸，可以搜搜怎么移动AppData\Roaming\（我的这个文件夹放在了D盘，感谢之前的我）</p>
+</blockquote>
 </li>
-<li><p>hexo安装</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br><span class="line">或</span><br><span class="line">cnpm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br></pre></td></tr></table></figure></li>
+<li><p>在安装node.js的文件夹内，新建<code>node_global</code>和<code>node_ache</code>两个文件夹，并且进行配置</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 修改npm全局安装目录</span></span><br><span class="line">npm config <span class="built_in">set</span> prefix D:\tools\nodejs\node_global</span><br><span class="line"><span class="comment"># 修改npm cache目录（node缓存文件夹)</span></span><br><span class="line">npm config <span class="built_in">set</span> cache D:\tools\nodejs\node_cache</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 在安装包的时候，会在node_global（全局）或当前文件夹（本地）下自动创建node_modules，不过由于下一步要进行环境变量配置，所以先手动创。</p>
+</blockquote>
+</li>
+<li><p>右键我的电脑–&gt;属性–&gt;高级系统设置–&gt;环境变量</p>
+<p>3.1 用户变量中</p>
+</li>
 </ol>
+<p>​		修改path，把C:\Users\Administrator\AppData\Roaming\npm\node_modules改为<code>D:\tools\nodejs\node_global\node_modules</code></p>
+<pre><code>   3.2  系统变量中
+</code></pre>
+<p>   ​		新建NODE_PATH，值为<code>D:\tools\nodejs\node_modules</code></p>
+<ol start="4">
+<li>可以看下此时的<code>npm root -g</code>和<code>npm config ls</code></li>
+<li>之后安装估计会报无权限错误，右键文件夹–&gt;属性–&gt;安全，把“完全控制”的权限加上去。</li>
+</ol>
+<h3 id="2-hexo安装"><a href="#2-hexo安装" class="headerlink" title="2. hexo安装"></a>2. hexo安装</h3>   <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br><span class="line">或</span><br><span class="line">cnpm install <span class="literal">-g</span> hexo<span class="literal">-cli</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="hexo搭建"><a href="#hexo搭建" class="headerlink" title="hexo搭建"></a>hexo搭建</h2><ol>
 <li><p>初始化博客所在文件夹</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> 博客文件夹所在的文件夹</span><br><span class="line">hexo init 文件夹名</span><br><span class="line">或</span><br><span class="line"><span class="built_in">cd</span> 博客文件夹（空文件夹）</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> 博客文件夹外的文件夹</span><br><span class="line">hexo init 博客文件夹</span><br><span class="line">或</span><br><span class="line"><span class="built_in">cd</span> 博客文件夹（空文件夹）</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>hexo默认博客内容生成+开启本地服务器（默认4000）</p>
 <figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s <span class="comment">#开启本地服务器</span></span><br></pre></td></tr></table></figure>
@@ -350,7 +377,8 @@
 <blockquote>
 <p>如果hexo g没有生成index，可以cnpm install，再不行看看另一篇博文“hexo生成博客报错”</p>
 </blockquote>
-</li>
+<p>如果端口冲突</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo server <span class="literal">-p</span> <span class="number">5000</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 ]]></content>
   </entry>
@@ -358,7 +386,80 @@
     <title>多电脑用git branch进行博客维护</title>
     <url>/2023/10/07/%E5%A4%9A%E7%94%B5%E8%84%91%E7%94%A8git%20branch%E8%BF%9B%E8%A1%8C%E5%8D%9A%E5%AE%A2%E7%BB%B4%E6%8A%A4/</url>
     <content><![CDATA[<p>因为电脑有台式和笔记本，在不同的场景下进行博客记录的需求产生了，而且有些博文写一半也不好展示，幸好有git的多分支功能。</p>
-<h4 id="对username-github-io仓库新建hexo分支，并克隆"><a href="#对username-github-io仓库新建hexo分支，并克隆" class="headerlink" title="对username.github.io仓库新建hexo分支，并克隆"></a>对username.github.io仓库新建hexo分支，并克隆</h4><p>在Github的username.github.io仓库上新建一个xxx分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Default branch中将默认分支设为xxx，save保存；然后将该仓库克隆到本地，进入该username.github.io文件目录。</p>
+<h2 id="已有博客源文件的电脑上操作"><a href="#已有博客源文件的电脑上操作" class="headerlink" title="已有博客源文件的电脑上操作"></a>已有博客源文件的电脑上操作</h2><h3 id="1-对远程仓库新建分支，并克隆该分支到本地"><a href="#1-对远程仓库新建分支，并克隆该分支到本地" class="headerlink" title="1. 对远程仓库新建分支，并克隆该分支到本地"></a>1. 对远程仓库新建分支，并克隆该分支到本地</h3><p>在Github的username.github.io仓库上新建一个main-&gt;developing分支，并切换到该分支，并在该仓库-&gt;Settings-&gt;Branches-&gt;Default branch中将默认分支设为developing，保存；</p>
+<p>然后copy ssh，在博客文件夹外的文件夹内git bash，将该仓库克隆到本地，进入该username.github.io文件目录。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> ...</span><br><span class="line">git branch <span class="comment">#确认当前分支</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-将博客源文件复制到username-github-io文件夹内，上传到分支备份"><a href="#2-将博客源文件复制到username-github-io文件夹内，上传到分支备份" class="headerlink" title="2.将博客源文件复制到username.github.io文件夹内，上传到分支备份"></a>2.将博客源文件复制到username.github.io文件夹内，上传到分支备份</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;源文件备份&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>将themes目录以内中的主题的.git目录删除（如果有），因为一个git仓库中不能包含另一个git仓库，提交主题文件夹会失败。</li>
+<li>可能有人会问，删除了themes目录中的.git不就不能<code>git pull</code>更新主题了吗，很简单，需要更新主题时在另一个地方<code>git clone</code>下来该主题的最新版本，然后将内容拷到当前主题目录即可</li>
+<li>顺便主题能作为npm模块直接装最好，就没上述烦恼了</li>
+</ul>
+</blockquote>
+<p>master分支和developing分支各自保存着一个版本，master分支用于保存博客静态资源，提供博客页面供人访问（hexo d直接推送就行，不用合并）；developing分支用于备份博客部署文件，供自己维护更新，两者在一个GitHub仓库内互不冲突</p>
+<h2 id="另一台电脑"><a href="#另一台电脑" class="headerlink" title="另一台电脑"></a>另一台电脑</h2><h3 id="1-基础node-js和hexo安装"><a href="#1-基础node-js和hexo安装" class="headerlink" title="1. 基础node.js和hexo安装"></a>1. 基础node.js和hexo安装</h3><ul>
+<li><p>最好装和老电脑一样的版本，特别是npm</p>
+<p>npm换版本</p>
+</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">npm install npm@<span class="number">6</span> <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-配置远程仓库连接"><a href="#2-配置远程仓库连接" class="headerlink" title="2. 配置远程仓库连接"></a>2. 配置远程仓库连接</h3><ul>
+<li><p>将新电脑的生成的ssh key添加到GitHub账户上</p>
+<p>在<strong>桌面</strong>右键-在powershell中运行</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;github用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;创建github的邮箱&quot;</span></span><br><span class="line"> <span class="comment"># 生成 ssh 密钥</span></span><br><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;创建github的邮箱&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一般执行上述命令之后，会生成 <code>id_rsa</code> 和 <code>id_rsa.pub</code> 两个文件，前者是我们私有的，而后者则是对外开放的。接着找到生成的 <code>.ssh</code> 的文件夹中的 id_rsa.pub 密钥，将内容复制；</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cat</span> id_rsa.pub <span class="comment">#生成在哪个文件夹输出中有写，去那个文件夹下cat</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>去github账户–&gt;settings-SSH and GPG keys–&gt;New SSH key，粘贴就行，title可以命名成“hexo”</li>
+</ul>
+<h3 id="3-在新电脑上克隆分支到本地"><a href="#3-在新电脑上克隆分支到本地" class="headerlink" title="3. 在新电脑上克隆分支到本地"></a>3. 在新电脑上克隆分支到本地</h3><ul>
+<li><p>切换到username.github.io目录，执行<code>npm install</code>，不行就<code>cnpm install</code></p>
+<blockquote>
+<p>由于仓库有一个.gitignore文件，用来忽略不用备份的文件，里面默认是忽略掉 node_modules文件夹的，也就是说仓库的hexo分支并没有存储该目录（也不需要，可以自己根据package.json安装），所以需要install下</p>
+</blockquote>
+</li>
+<li><p>hexo s 看看有无报错，本地看看效果</p>
+</li>
+</ul>
+<h2 id="协同时"><a href="#协同时" class="headerlink" title="协同时"></a>协同时</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;xxx&quot;</span></span><br><span class="line">git pull</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
+    <title>移动软件后，环境变量和注册表的更改，以及右键-打开方式出现无效克隆体的解决方法</title>
+    <url>/2023/10/09/%E7%A7%BB%E5%8A%A8%E8%BD%AF%E4%BB%B6%E5%90%8E%EF%BC%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%92%8C%E6%B3%A8%E5%86%8C%E8%A1%A8%E7%9A%84%E6%9B%B4%E6%94%B9%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%8F%B3%E9%94%AE-%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F%E5%87%BA%E7%8E%B0%E6%97%A0%E6%95%88%E5%85%8B%E9%9A%86%E4%BD%93%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>这篇博文用来记录我对注册表的一些浅显认知好了，各位还是卸载重装吧，能劝一个是一个……</p>
+<hr>
+<p>如果之前软件装的位置想换，但只换软件所在文件夹位置不够，还有环境变量以及注册表这两个最基础的要改动。</p>
+<p>环境变量在系统变量和用户变量中找到你移动的软件，改成新路径。</p>
+<p>注册表就比较麻烦。</p>
+<ol>
+<li><p>修改打开方式里软件的失效路径，确保能使用该软件</p>
+<p><code>HKEY_CLASSES_ROOT\Applications</code>里<code>ctrl+f</code>找到移动的软件名字。<br>1.1. 改图标路径<br>​			<code>DefaultIcon</code>里数据改成新路径。</p>
+<p>​	1.2 改调用shell打开的命令路径</p>
+<p>​			<code>shell-open-command</code>里数据改成新路径（注意”%1”不要误删）</p>
+<p>这时右键打开方式就能看见了，运气好的话只有一个能正常运行的软件选项。</p>
+<p>运气不好即打开方式有失效的另一个同名软件，看2吧。</p>
+</li>
+<li><p>打开方式出现失效的同名软件</p>
+<p>​	2.1 看看打开方式的正常排布情况，即没有同名无效软件的（题外话）</p>
+<p>​	<code>HKEY_CLASSES_ROOT\SystemFileAssociations</code>里<code>OpenWithProgIDs</code>，<code>ctrl+f</code>找到你想右键的那个文件对应的拓展名（.extension)。比如我移了<code>Typora</code>后，就需要查找<code>.md</code>。你会看到和正常打开方式的排布，但如果不一样——有同名无效软件，可以试着删删看？</p>
+<p>​	2.2  网上的办法</p>
+<p><code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts</code>里<code>ctrl+f</code>找.extension，在<code>OpenWithList</code>里看看是不是有重复的数值，有的话删一个试试（具体哪个我也不知道，因为这个方法对我没生效，全删光了但打开方式还是有两个）。</p>
+<p>​	2.3 上面不行的话</p>
+<p>​	<code>HKEY_CLASSES_ROOT</code>里<code>ctrl+f</code>搜索<code>软件名.extension</code>，比如我就是<code>Typora.md</code>，进行1的操作，改新路径。然后包括下面同软件名不同扩展名的项也改掉。（我好像是做了这一步后，同名无效软件才消失的）</p>
+<hr>
+<p>如果没有太多自定义设置，还是建议重装。因为除了这些要改，还有桌面快捷方式、任务栏图标消失，可能的卸载失败，系统自动调用失败等各种bug。更别提我这种因为工具早期装在中文文件夹，后期装在另一个英文文件夹，把中文里的全部剪切到英文里，一大堆软件要改。乏了。</p>
+</li>
+</ol>
 ]]></content>
   </entry>
 </search>
