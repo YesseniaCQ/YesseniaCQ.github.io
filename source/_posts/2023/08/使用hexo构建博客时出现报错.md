@@ -20,6 +20,7 @@ tags:
   npm ERR! code ELOCKVERIFY
   npm ERR! Errors were found in your package-lock.json, run  npm install  to fix them. #如果有直接告诉可能的修法，先尝试。
   npm ERR!     Missing: hexo-renderer-marked@^6.0.0 #缺少的组件
+  ```
 
 npm ERR! A complete log of this run can be found in:
 npm ERR!     D:\tools\blog\node.js\node_cache\_logs\2023-08-06T08_58_55_270Z-debug.log
@@ -30,26 +31,38 @@ npm ERR!     D:\tools\blog\node.js\node_cache\_logs\2023-08-06T08_58_55_270Z-deb
  	2. 查看是否少了什么组件，通过npm install hexo-xxx-xxx 安装试试。（如上述报错，hexo缺少了hexo-renderer-marked组件，因此执行npm install hexo-renderer-marke）
  	3. 组件安装失败可以试试用cnpm安装
 
-```bat
+​```bat
 cnpm install hexo-renderer-marked --save #虽然还是有报错，但index.html生成了
-```
+  ```
 
 4.  步骤3完成之后，执行hexo c，hexo g重新生成静态文件。
 
 
 
-### 总结下来的构建方式
+如果有啥模块没被找到，`npm install` 一下，如果说生成package.json的npm版本低，需要把当前版本降级
+
+```powershell
+npm install -g npm@6
+```
+
+再报错就`cnpm install` 或`cnpm install pkgname`  或  `cnpm install pkgname -g`（不报错就停）（我估计多电脑操作时两台电脑的npm版本不同，导致根据package.json进行cnpm时装不上一些基础包）
+
+
+
+### 总结下来的第一次构建方式
 
 ```bat
-npx hexo int
-cnpm install
+hexo int
 hexo g
+hexo s
 ```
+
+> 如果hexo g没有生成index，可以cnpm install
 
 或
 
 ```bat
-npx hexo init
+hexo init
 npm install dependencies
 npm audit fix#查看缺少什么模块
 cnpm install hexo-renderer-marked@^6.0.0

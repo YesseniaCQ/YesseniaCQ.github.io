@@ -4,6 +4,8 @@ date: 2023-08-13 15:30:59
 tags:
 ---
 
+在**桌面**右键-在powershell中运行
+
 ```bash
  git config --global user.name "github用户名"
  git config --global user.email "创建github的邮箱"
@@ -14,10 +16,10 @@ tags:
 一般执行上述命令之后，会生成 `id_rsa` 和 `id_rsa.pub` 两个文件，前者是我们私有的，而后者则是对外开放的。接着找到生成的 `.ssh` 的文件夹中的 id_rsa.pub 密钥，将内容复制；
 
 ```bash
-cat ~/.ssh/id_rsa.pub
+cat id_rsa.pub #生成在哪个文件夹输出中有写，去那个文件夹下cat
 ```
 
-去github账户-settings-SSH and GPG keys-New SSH key，粘贴就行，title可以命名成“hexo”
+去github账户-->settings-SSH and GPG keys-->New SSH key，粘贴就行，title可以命名成“hexo”
 
 然后去配置文件`_config.yml`中设置：
 
@@ -30,7 +32,7 @@ deploy:
   branch: main
 ```
 
-最后在git bash输入
+最后在博客文件夹的git bash中输入
 
 ```bash
 hexo clean  #删除生成的文件和缓存
