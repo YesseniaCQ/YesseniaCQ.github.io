@@ -78,13 +78,13 @@ toc:
     list_number: true
     max_depth: 3
     min_depth: 1
+    post_title: true
 
 
 layout:
     path: layout
     tag: async/tag
     banner: async/banner
-    main: async/main
 
 footer:
   powered:
