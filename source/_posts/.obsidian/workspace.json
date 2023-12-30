@@ -1,0 +1,169 @@
+{
+  "main": {
+    "id": "28ea58fb101b5d60",
+    "type": "split",
+    "children": [
+      {
+        "id": "9bd7d4ca38a716ad",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3b3b4a631fedd435",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2023/12/seurat使用.md",
+                "mode": "source",
+                "source": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "164cdab63ef04376",
+    "type": "split",
+    "children": [
+      {
+        "id": "5dd0e6c46132725d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6960c547d19bc438",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "8eec809c09efcb94",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "b8d6b696f5151d73",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "bbbc56953b258127",
+    "type": "split",
+    "children": [
+      {
+        "id": "d657d7d11b054550",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "330c648731ad4d49",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "2023/12/seurat使用.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "1b63f4d6337120e2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "2023/12/seurat使用.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "43bd68adcaf8d72a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "1d260144da8a4ff3",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "2023/12/seurat使用.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
+    }
+  },
+  "active": "3b3b4a631fedd435",
+  "lastOpenFiles": [
+    "2023/12/生信R可视化.md",
+    "2023/12/seurat使用.md",
+    "2023/12/生信R可视化/Pasted image 20231229205030.png",
+    "2023/12/R基础命令.md",
+    "2023/12/linux常用命令总结.md",
+    "2023/12/生信相关软件安装.md",
+    "2023/12/seurat使用",
+    "2023/12/写开题的思路.md",
+    "2023/12/写开题的思路",
+    "2023/12/R基础命令",
+    "2023/12/生信R可视化",
+    "2023/12/围产期小鼠睾丸发育过程的染色质可及性图谱.md",
+    "2023/12/linux报错及处理方法.md",
+    "2023/12/卸载conda并重装.md",
+    "2023/12/围产期小鼠睾丸发育过程的染色质可及性图谱/Pasted image 20231227085338.png",
+    "2023/12/围产期小鼠睾丸发育过程的染色质可及性图谱",
+    "官网.md"
+  ]
+}
