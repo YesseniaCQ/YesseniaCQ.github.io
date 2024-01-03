@@ -8,14 +8,16 @@ date: 2023-12-29 10:06:25
 tags:
 cover:
 ---
-
+![[Pasted image 20240103183223.png]]
 ## 转录组处理
 ```r
 ###当前环境为outImg
-
+load("../20231222_singleMuti/shareData/testis_combined.annotationCellType.Rdata")
 table(Idents(scrnat)) #查看每种簇下的细胞数
+Idents(scrnat)<-"cell_type" #修改active.ident:""内为seurat_obj@meta.data$cell_type
 
-#对clusters进行重命名注释（注释来自文件）
+
+##对clusters进行重命名注释（注释来自文件）[没用上]
 celltype <- read.csv("../celltype.csv",header=F)
 labers = celltype[match(as.numeric(as.character(scrnat@active.ident)), celltype[, 1]), 2]
 scrnat$labers <- labers
@@ -54,3 +56,9 @@ cluster_name <- celltype[,2]
 >- `min.pct`：只检验两个类群中任何一个类群中最少部分细胞中检测到的基因。旨在通过不检验那些表达频率很低的基因来加速函数运行。默认值为0.1。
 >	- 缺点：
 >		- 如果设置为一个很高的值，可能会产生很多假阴性，因为不是所有的基因都会在所有的细胞中检测到（即使是表达的基因）。
+
+```r
+count_mat <- GetAssayData(object=scrnat, slot="counts") #slot=counts/meta.data/data
+avgPctMat <- AverageExpression(count_mat, scrnat$celltype, feature_normalize=TRUE, min_pct=0)
+
+```
