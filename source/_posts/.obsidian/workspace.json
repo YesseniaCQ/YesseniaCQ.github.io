@@ -69,8 +69,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "bbbc56953b258127",
@@ -149,11 +148,11 @@
   },
   "active": "3b3b4a631fedd435",
   "lastOpenFiles": [
-    "Pasted image 20240104192120.png",
-    "Pasted image 20240104191857.png",
+    "2023/12/seurat使用.md",
     "2023/12/生信R可视化.md",
     "2024/01/毕设记录.md",
-    "2023/12/seurat使用.md",
+    "Pasted image 20240104192120.png",
+    "Pasted image 20240104191857.png",
     "2023/12/seurat使用/Pasted image 20240103183223.png",
     "2024/01/毕设记录",
     "2024/01",
