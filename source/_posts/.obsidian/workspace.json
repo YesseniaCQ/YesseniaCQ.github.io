@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "bbbc56953b258127",
@@ -146,7 +147,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "3b3b4a631fedd435",
+  "active": "6960c547d19bc438",
   "lastOpenFiles": [
     "2023/12/seurat使用.md",
     "2023/12/生信R可视化.md",
