@@ -62,3 +62,8 @@ count_mat <- GetAssayData(object=scrnat, slot="counts") #slot=counts/meta.data/d
 avgPctMat <- AverageExpression(count_mat, scrnat$celltype, feature_normalize=TRUE, min_pct=0)
 
 ```
+
+```r"找对应细胞群makrer"
+ESOS=avgPctMat2[avgPctMat2["grp"]=="Early stage of spermatids",] #grp是细胞类型，avgPctMat2可以换成dotplot出的图参数p
+head(ESOS[order(-ESOS$avgExpr,-ESOS$pctExpr),]) #-是逆序，从大到小
+```
