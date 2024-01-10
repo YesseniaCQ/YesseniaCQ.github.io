@@ -19,7 +19,34 @@ ggsave("xx.xxx",width=5,height=8)
 
 ## 热图pheatmap
 ```r
-
+pheatmap(
+  mat = test, # 热图的数据源，要保证为数值矩阵，类型为numeric
+  scale = "none", # 数值标准化，可以规定按行（row）或按列（column）
+  clustering_method=""
+  cluster_rows = TRUE, #  是否按行聚类
+  cluster_cols = TRUE, #  是否按列聚类
+  legend = TRUE, #  图例是否显示
+  legend_breaks = NA, # 图例是否断点标注
+  legend_labels = NA, # 图例断点标注的标题
+  show_rownames = TRUE, # 是否显示行名
+  show_colnames = TRUE, # 是否显示列名
+  main = NA, #  热图标题
+  fontsize = 10, #  热图字体大小
+  fontsize_row = 10, #  热图行名字体大小，默认为fontsize
+  fontsize_col = 10, #  热图列名字体大小，默认为fontsize
+  angle_col = 0, #  热图列名角度
+  display_numbers = FALSE, #  矩阵的数值是否显示在热图上
+  number_format = "%.2f", # 单元格中数值的显示方式
+  fontsize_number = 8, #  显示在热图上的矩阵数值的大小，默认为0.8*fontsize
+  gaps_row = NULL, #  在行未聚类时使用，确定将间隙放置在热图中的位置。
+  gaps_col = NULL, #  在列未聚类时使用，确定将间隙放置在热图中的位置。
+  labels_row = NULL, #  使用行标签代替行名
+  labels_col = NULL, #  使用列标签代替列名
+  filename = NA, #  保存路径和文件名
+  width = NA, # 保存图片的宽度
+  height = NA, #  保存图片的高度
+  na_col = "#DDDDDD" #  对“NA”值对应的单元格填充颜色
+)
 ```
 > 关于聚类的距离选择：
 > 1. **correlation**：Pearson相关系数距离。适用于连续型数据，考虑基因之间的线性相关性。
@@ -49,7 +76,9 @@ out_path <- "/public/download/ycq2022/20240108_singleMuti/celltype_plot"
 ######################################################
 load(rna_file)
 DefaultAssay(scrnat) <- "MAGIC_RNA"
+
 Idents(scrnat)<-"cell_type"
+levels(x = scrnat) <- grp_order
 
 ######################################################
 
@@ -74,33 +103,32 @@ grp_order = c("SSC",
 
 # 寻找差异基因
 markers <- FindAllMarkers(scrnat, test.use = "wilcox",
+						  group.by = "cell_type",
+						  min.pct = 0.25,
+						  logfc.threshold = 0.25,
+						  only.pos = TRUE,
+						  verbose = TRUE)
+
+markers.deseq2 <- FindAllMarkers(scrnat, test.use = "DESeq2",
                              group.by = "cell_type",
                              min.pct = 0.25,
                              logfc.threshold = 0.25,
                              only.pos = TRUE,
                              verbose = TRUE)
-
+markers.fliter.fdr=markers[markers$p_val_adj<0.05,]
+markers.fliter.fc=markers.fliter.fdr[markers.fliter.fdr$avg_log2FC>1,]
+markers.fliter.fc[markers.fliter.fc["cluster"]=="Myoid cells"]
 # 提取平均表达量
 df <- as.data.frame(AverageExpression(object = scrnat)$MAGIC_RNA)
 
-
-diff_gene <- markers$gene
-exp_diff <- df[rownames(df) %in% diff_gene, ]
-exp_diff_sorted <- exp_diff[, grp_order]
-
-exprTable_t <- as.data.frame(t(exp_diff))
-col_dist = dist(exprTable_t)
-hclust_1 <- hclust(col_dist)
-dend = reorder(as.dendrogram(hclust_1), wts=order(match(grp_order, rownames(exprTable_t))), agglo.FUN = max)
-col_cluster <- as.hclust(dend)
-
+diff_gene <- markers.fliter.fc$gene
+exp_diff <- df[rownames(df) %in% diff_gene,]
+exp_diff <- exp_diff[diff_gene, grp_order]
 
 #绘图
-heatmap1=pheatmap(exp_diff_sorted, scale = "row", clustering_distance_rows = "correlation", clustering_method = "ward.D2", cluster_rows = T, cluster_cols = F, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
+heatmap1=pheatmap(exp_diff, scale = "row", cluster_rows = F, cluster_cols = F, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
 
-heatmap2=pheatmap(exp_diff, scale = "row",  cluster_rows = T, cluster_cols = hclust_1, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
-
-heatmap3=pheatmap(exp_diff_sorted, scale = "row", clustering_distance_rows = "manhattan", cluster_rows = T, cluster_cols = F, show_rownames = FALSE,clustering_method = "ward.D2",color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , main="manhattan", cutree_cols = 16)
+heatmap2=pheatmap(exp_diff, scale = "row", clustering_method="single", cluster_rows = F, cluster_cols = F, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
 
 library(patchwork)
 
