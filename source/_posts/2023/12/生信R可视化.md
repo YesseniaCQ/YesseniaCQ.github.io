@@ -17,7 +17,99 @@ dev.off()
 ggsave("xx.xxx",width=5,height=8)
 ```
 
-## 不同细胞类型差异基因表达的通路图
+## 热图pheatmap
+```r
+
+```
+> 关于聚类的距离选择：
+> 1. **correlation**：Pearson相关系数距离。适用于连续型数据，考虑基因之间的线性相关性。
+> 2. **euclidean**：欧几里得距离。适用于连续型数据，将基因按照绝对表达值的差异进行排列。
+>3. **maximum**：切比雪夫距离（Maximum Distance）。将基因按照最大差异值进行排列。
+>4. **manhattan**：曼哈顿距离。适用于非负连续型数据，考虑基因之间的绝对差异,如基因表达数据，尤其在数据具有稀疏性（有大量零值）时。将基因按照它们的差异性进行排列。
+>5. **canberra**：Canberra距离。适用于非负连续型数据，对差异的敏感性较高，可用于稀疏数据。
+>6. **binary**：二进制距离。适用于二元数据，例如基因存在/不存在的情况。
+>7. **minkowski**：闵可夫斯基距离。可以根据参数`p`来调整成其他距离度量，例如欧几里得距离（`p=2`）或曼哈顿距离（`p=1`）。
+
+选择哪种距离度量取决于您的数据特点和分析目标。例如，如果您的数据是基因表达数据，通常使用`correlation`或`euclidean`距离进行聚类是常见的选择。如果您的数据具有不同的特性或需求，可以根据需要选择适当的距离度量。同时，也可以尝试不同的距离度量来查看它们如何影响热图的可视化结果，并选择最适合您研究的距离度量。
+### 差异基因热图+GO富集
+```r
+#######################################################
+library(ggplot2)
+library(Seurat)
+library(magrittr)
+library(pheatmap)
+#######################################################
+  
+## 单细胞表达文件
+rna_file="/public/download/ycq2022/20231222_singleMuti/shareData/qc_atac/testis_combined.annotationCellType.qc.Rdata"
+
+## 输出文件夹
+out_path <- "/public/download/ycq2022/20240108_singleMuti/celltype_plot"
+
+######################################################
+load(rna_file)
+DefaultAssay(scrnat) <- "MAGIC_RNA"
+Idents(scrnat)<-"cell_type"
+
+######################################################
+
+grp_order = c("SSC",
+"Differenting&Differented SPG",
+"Leptotene",
+"Zygotene",
+"Patchytene",
+"Diplotene",
+"Early stage of spermatids",
+"Round&ElongateS.tids",
+"Sperm",
+"Leydig cells",
+"Myoid cells",
+"Pericytes",
+"Sertoli cells",
+"Endothelial cells",
+"NKT cells",
+"Macrophages")
+
+#########################################################
+
+# 寻找差异基因
+markers <- FindAllMarkers(scrnat, test.use = "wilcox",
+                             group.by = "cell_type",
+                             min.pct = 0.25,
+                             logfc.threshold = 0.25,
+                             only.pos = TRUE,
+                             verbose = TRUE)
+
+# 提取平均表达量
+df <- as.data.frame(AverageExpression(object = scrnat)$MAGIC_RNA)
+
+
+diff_gene <- markers$gene
+exp_diff <- df[rownames(df) %in% diff_gene, ]
+exp_diff_sorted <- exp_diff[, grp_order]
+
+exprTable_t <- as.data.frame(t(exp_diff))
+col_dist = dist(exprTable_t)
+hclust_1 <- hclust(col_dist)
+dend = reorder(as.dendrogram(hclust_1), wts=order(match(grp_order, rownames(exprTable_t))), agglo.FUN = max)
+col_cluster <- as.hclust(dend)
+
+
+#绘图
+heatmap1=pheatmap(exp_diff_sorted, scale = "row", clustering_distance_rows = "correlation", clustering_method = "ward.D2", cluster_rows = T, cluster_cols = F, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
+
+heatmap2=pheatmap(exp_diff, scale = "row",  cluster_rows = T, cluster_cols = hclust_1, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
+
+heatmap3=pheatmap(exp_diff_sorted, scale = "row", clustering_distance_rows = "manhattan", cluster_rows = T, cluster_cols = F, show_rownames = FALSE,clustering_method = "ward.D2",color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , main="manhattan", cutree_cols = 16)
+
+library(patchwork)
+
+pdf("RNA_diffgene2.pdf")
+heatmap2
+dev.off()
+
+```
+### 气泡图
 ```r
 library(Seurat)
 library(magrittr)
@@ -26,32 +118,6 @@ library(dplyr)
 library(tidyr)
 library(tidyverse)
 
-df <- as.data.frame(AverageExpression(object = scrnat)$RNA)
-
-df %>%
-    filter(row.names(.) %in% all.markers$gene) %>%
-    rownames_to_column(var = "gene") %>%
-    right_join(all.markers) %>%
-    arrange(cluster, avg_log2FC) %>%
-    pivot_longer(cols = `0`:`16`, names_to = "cluster_name", values_to = "exp") %>%
-    group_by(gene) %>%
-    mutate(exp = as.numeric(scale(exp))) %>%
-    ungroup() -> df2
-
-p1 <- df2 %>%
-    ggplot(aes(x = cluster_name,
-               y = reorder(gene, cluster),
-               fill = exp)) +
-    geom_tile(color = "grey60") +
-    scale_fill_gradient2(low = "blue", mid = "white", high = "red", breaks = c(-1,0,1,2)) +
-    scale_x_discrete(limits = cluster_name) +
-    theme_void() +
-    theme(legend.position = "top")
-
-```
-
-```r
-library(ggplot2) 
 markers = c('UTF1', 'KIT', 'STRA8', 'SPO11','SYCP3', 'OVOL2', 
                    'NME8', 'TXNDC8', 'TNP1',
                    'PRM1', 'AMH', 'DLK1', 
@@ -66,89 +132,6 @@ p4 <- DotPlot(scrnat, features=markers,
 p4
 ggsave(plot=p4, filename="check_marker_by_seurat_cluster.pdf")
 ```
-
-Integrated single-cell chromatin and
-transcriptomic analyses of human scalp
-identify gene-regulatory programs and
-critical cell types for hair and skin diseases`
-
-
-```r
-##########################################################################################
-# Dot plots of both RNA and ATAC using common set of markers
-##########################################################################################
-
-# Dot plot of marker genes 
-
-# NamedClust first:
-
-# Markers for identifying broad classes of cells:
-featureSets <- list(
-    "Myoid cells" = c("MYH11"), 
-    "Round&ElongateS.tids" = c("TXNDC8"), 
-    "Sperm" = c("TNP1","PRM1"), 
-    "Leydig cells" = c("DLK1"),  
-    "Differenting&Differented SPG" = c("KIT","STRA8"), 
-    "SSC" = c("UTF1"), 
-    "Endothelial cells" = c("VWF"), 
-    "Leptotene" = c("SPO11"), 
-    "Zygotene" = c("SYCP3"), 
-    "Diplotene" = c("NME8"), 
-    "Sertoli cells" = c("AMH"),
-    "Patchytene" = c("OVOL2"),
-    "Macrophages" = c("CD14"),
-    "Pericytes" = c("NOTCH3"),
-    "NKT cells" = c("NKG7","GFBP2")
-)
-
-NatacOrder <- c(
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16"
-)
-
-NrnaOrder <- c(
-    "rTc3", 
-    "rTc2", 
-    "rTc1", 
-    "rBc1", 
-    "rMy4", 
-    "rMy2", 
-    "rMy1", 
-    "rMy3", 
-    "rMa1", 
-    "rKc5", 
-    "rKc4", 
-    "rKc1", 
-    "rKc2", 
-    "rKc3", 
-    "rFb1", 
-    "rFb2", 
-    "rMu1", 
-    "rMu2", 
-    "rVe1", 
-    "rLe1", 
-    "rMe1", 
-    "rMe2" 
-)
-LNatacOrder <- unlist(atac.NamedClust)[NatacOrder]
-LNrnaOrder <- unlist(rna.NamedClust)[NrnaOrder]
-
-namedClustAspect <- 1.6
-fineClustAspect <- 1.6
 
 
 
