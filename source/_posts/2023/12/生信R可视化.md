@@ -8,7 +8,7 @@ date: 2023-12-28 09:39:23
 tags:
 cover:
 ---
-## 导出图片
+### 导出图片
 ```r
 pdf("xx.pdf",width=5,height=8)
 p1
@@ -17,7 +17,7 @@ dev.off()
 ggsave("xx.xxx",width=5,height=8)
 ```
 
-## 热图pheatmap
+### 热图pheatmap
 ```r
 pheatmap(
   mat = test, # 热图的数据源，要保证为数值矩阵，类型为numeric
@@ -109,33 +109,57 @@ markers <- FindAllMarkers(scrnat, test.use = "wilcox",
 						  only.pos = TRUE,
 						  verbose = TRUE)
 
-markers.deseq2 <- FindAllMarkers(scrnat, test.use = "DESeq2",
-                             group.by = "cell_type",
-                             min.pct = 0.25,
-                             logfc.threshold = 0.25,
-                             only.pos = TRUE,
-                             verbose = TRUE)
 markers.fliter.fdr=markers[markers$p_val_adj<0.05,]
 markers.fliter.fc=markers.fliter.fdr[markers.fliter.fdr$avg_log2FC>1,]
 markers.fliter.fc[markers.fliter.fc["cluster"]=="Myoid cells"]
 # 提取平均表达量
 df <- as.data.frame(AverageExpression(object = scrnat)$MAGIC_RNA)
 
-diff_gene <- markers.fliter.fc$gene
+diff_gene <- unique(markers.fliter.fc$gene)
 exp_diff <- df[rownames(df) %in% diff_gene,]
 exp_diff <- exp_diff[diff_gene, grp_order]
+
+write.table(diff_gene,"DiffGene.csv",row.names=FALSE,col.names=TRUE,sep=",")
 
 #绘图
 heatmap1=pheatmap(exp_diff, scale = "row", cluster_rows = F, cluster_cols = F, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
 
 heatmap2=pheatmap(exp_diff, scale = "row", clustering_method="single", cluster_rows = F, cluster_cols = F, show_rownames = FALSE, color = colorRampPalette(colors = c("lightsteelblue1","white","red"))(100) , cutree_cols = 16)
 
-library(patchwork)
-
-pdf("RNA_diffgene2.pdf")
-heatmap2
+pdf("RNA_diffgene.pdf")
+heatmap1
 dev.off()
 
+```
+### 对应基因的GO富集
+```r
+## 既往研究整理的代码
+scriptPath <- "/public/download/ycq2022/20240108_singleMuti/scScalpChromatin"
+source(paste0(scriptPath, "/GO_wrappers.R"))
+
+allGenes=diff_gene
+pos_top_genes=markers.fliter.fc[markers.fliter.fc["cluster"]=="SSC",]$gene
+
+upGO <- rbind(
+    calcTopGo(allGenes, interestingGenes=pos_top_genes, nodeSize=5, ontology="BP"), 
+    calcTopGo(allGenes, interestingGenes=pos_top_genes, nodeSize=5, ontology="MF")
+    )
+  upGO <- upGO[order(as.numeric(upGO$pvalue), decreasing=FALSE),]
+  up_go_plot <- topGObarPlot(upGO, cmap=cmaps_BOR$comet, nterms=6, border_color="black", 
+    barwidth=0.9, title=sprintf("%s putative targets (%s genes)", motif_short, length(pos_top_genes)), enrichLimits=c(0, 6))
+  # Negatively regulated genes:
+  downGO <- rbind(
+    calcTopGo(allGenes, interestingGenes=neg_top_genes, nodeSize=5, ontology="BP"), 
+    calcTopGo(allGenes, interestingGenes=neg_top_genes, nodeSize=5, ontology="MF")
+    )
+  downGO <- downGO[order(as.numeric(downGO$pvalue), decreasing=FALSE),]
+  down_go_plot <- topGObarPlot(downGO, cmap=cmaps_BOR$comet, nterms=6, border_color="black", 
+    barwidth=0.9, title=sprintf("%s putative targets (%s genes)", motif_short, length(neg_top_genes)), enrichLimits=c(0, 6))
+  pdf(paste0(regPlotDir, sprintf("/%s_LS.pdf", motif_short)), width=8, height=6)
+  print(p)
+  print(up_go_plot)
+  print(down_go_plot)
+  dev.off()
 ```
 ### 气泡图
 ```r
@@ -162,6 +186,10 @@ ggsave(plot=p4, filename="check_marker_by_seurat_cluster.pdf")
 ```
 
 
+```r
+
+
+```
 
 ```
 
