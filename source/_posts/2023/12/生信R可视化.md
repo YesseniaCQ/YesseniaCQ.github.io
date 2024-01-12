@@ -137,29 +137,48 @@ dev.off()
 scriptPath <- "/public/download/ycq2022/20240108_singleMuti/scScalpChromatin"
 source(paste0(scriptPath, "/GO_wrappers.R"))
 
-allGenes=diff_gene
-pos_top_genes=markers.fliter.fc[markers.fliter.fc["cluster"]=="SSC",]$gene
 
-upGO <- rbind(
-    calcTopGo(allGenes, interestingGenes=pos_top_genes, nodeSize=5, ontology="BP"), 
-    calcTopGo(allGenes, interestingGenes=pos_top_genes, nodeSize=5, ontology="MF")
+#############################################################
+# GO enrichments of top N genes per cluster 
+# ("Top" genes are defined as having the most peak-to-gene links)
+source(paste0(scriptPath, "/GO_wrappers.R"))
+
+kclust <- grp_order
+all_genes <- diff_gene
+kclust_df <- markers.fliter.fc
+
+# Save table of top linked genes per kclust
+topKclustGenes <- lapply(kclust, function(k){
+  kclust_df[kclust_df$cluster == k,]$gene
+  })
+names(topKclustGenes) <- grp_order
+outfile <- paste0("cluster_diffgene", sprintf("/topN_genes_kclust_k%s.tsv", 16))
+
+aa=do.call(cbind, lapply(lapply(topKclustGenes, unlist), `length<-`, max(lengths(topKclustGenes)))) %>% as.data.frame() #将不同长度列表填补NA生成数据框
+write.table(aa, file=outfile, row.names = FALSE, col.names=TRUE,quote=FALSE, sep='\t')
+
+GOresults <- lapply(kclust, function(k){
+  message(sprintf("Running GO enrichments on k cluster %s...", k))
+  clust_genes <- topKclustGenes[[k]]
+  upGO <- rbind(
+    calcTopGo(all_genes, interestingGenes=clust_genes, nodeSize=5, ontology="BP") 
     )
-  upGO <- upGO[order(as.numeric(upGO$pvalue), decreasing=FALSE),]
-  up_go_plot <- topGObarPlot(upGO, cmap=cmaps_BOR$comet, nterms=6, border_color="black", 
-    barwidth=0.9, title=sprintf("%s putative targets (%s genes)", motif_short, length(pos_top_genes)), enrichLimits=c(0, 6))
-  # Negatively regulated genes:
-  downGO <- rbind(
-    calcTopGo(allGenes, interestingGenes=neg_top_genes, nodeSize=5, ontology="BP"), 
-    calcTopGo(allGenes, interestingGenes=neg_top_genes, nodeSize=5, ontology="MF")
-    )
-  downGO <- downGO[order(as.numeric(downGO$pvalue), decreasing=FALSE),]
-  down_go_plot <- topGObarPlot(downGO, cmap=cmaps_BOR$comet, nterms=6, border_color="black", 
-    barwidth=0.9, title=sprintf("%s putative targets (%s genes)", motif_short, length(neg_top_genes)), enrichLimits=c(0, 6))
-  pdf(paste0(regPlotDir, sprintf("/%s_LS.pdf", motif_short)), width=8, height=6)
-  print(p)
-  print(up_go_plot)
-  print(down_go_plot)
-  dev.off()
+  upGO[order(as.numeric(upGO$pvalue), decreasing=FALSE),]
+  })
+
+names(GOresults) <- paste0("cluster_", kclust)
+write.table(GOresults,"cluster_go_new.csv",row.names=FALSE,col.names=TRUE,sep=",")
+# Plots of GO term enrichments:
+pdf(paste0("cluster_diffgene", sprintf("/kclust_GO_3termsBPonlyBarLim_k%s_c.pdf", 16)), width=10, height=2.5)
+for(name in names(GOresults)){
+    goRes <- GOresults[[name]]
+    if(nrow(goRes)>1){
+      print(topGObarPlot(goRes, cmap = cmaps_BOR$comet, 
+        nterms=3, border_color="black", 
+        barwidth=0.85, title=name, barLimits=c(0, 15)))
+    }
+}
+dev.off()
 ```
 ### 气泡图
 ```r
