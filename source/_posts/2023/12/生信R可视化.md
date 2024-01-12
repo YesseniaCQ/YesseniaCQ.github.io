@@ -141,7 +141,6 @@ source(paste0(scriptPath, "/GO_wrappers.R"))
 #############################################################
 # GO enrichments of top N genes per cluster 
 # ("Top" genes are defined as having the most peak-to-gene links)
-source(paste0(scriptPath, "/GO_wrappers.R"))
 
 kclust <- grp_order
 all_genes <- diff_gene

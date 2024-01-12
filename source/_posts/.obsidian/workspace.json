@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2023/12/生信R可视化.md",
+                "file": "2024/01/毕设记录.md",
                 "mode": "source",
                 "source": true
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "2023/12/生信R可视化.md",
+                "file": "2024/01/毕设记录.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "2023/12/生信R可视化.md",
+                "file": "2024/01/毕设记录.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2023/12/生信R可视化.md"
+                "file": "2024/01/毕设记录.md"
               }
             }
           }
@@ -148,8 +148,8 @@
   },
   "active": "3b3b4a631fedd435",
   "lastOpenFiles": [
-    "2024/01/毕设记录.md",
     "2023/12/生信R可视化.md",
+    "2024/01/毕设记录.md",
     "2023/12/seurat使用.md",
     "Pasted image 20240104192120.png",
     "Pasted image 20240104191857.png",
