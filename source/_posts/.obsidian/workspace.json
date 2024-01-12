@@ -138,16 +138,17 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false
     }
   },
   "active": "3b3b4a631fedd435",
   "lastOpenFiles": [
+    "2023/12/seurat使用/Pasted image 20240112232119.png",
     "2023/12/生信R可视化.md",
     "2024/01/毕设记录.md",
     "2023/12/seurat使用.md",
