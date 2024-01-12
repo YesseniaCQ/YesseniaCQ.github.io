@@ -63,3 +63,8 @@ avgPctMat <- AverageExpression(count_mat, scrnat$celltype, feature_normalize=TRU
 
 ```
 
+### 找差异基因
+[seurat-FindAllMarkers()源码解析 - 简书 (jianshu.com)](https://www.jianshu.com/p/f5c8f9ea84af)
+```r
+```
+![[Pasted image 20240112232119.png]]
