@@ -65,6 +65,8 @@ avgPctMat <- AverageExpression(count_mat, scrnat$celltype, feature_normalize=TRU
 
 ### 找差异基因
 [seurat-FindAllMarkers()源码解析 - 简书 (jianshu.com)](https://www.jianshu.com/p/f5c8f9ea84af)
+[单细胞转录组|Seurat 4.0 使用指南 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/359020041)
+[[单细胞|R]单细胞之富集分析 - mdnice 墨滴](https://mdnice.com/writing/f645e2cad543426987f51b62c2ce2f9d)
 ```r
 ```
 ![[Pasted image 20240112232119.png]]

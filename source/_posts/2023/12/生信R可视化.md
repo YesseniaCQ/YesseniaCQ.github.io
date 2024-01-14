@@ -197,7 +197,7 @@ markers = c('UTF1', 'KIT', 'STRA8', 'SPO11','SYCP3', 'OVOL2',
                    'FGFBP2')
 library(stringr)  
 p4 <- DotPlot(scrnat, features=markers,
-             assay='RNA')  + coord_flip()
+             assay='MAGIC_RNA')  + coord_flip()
 
 p4
 ggsave(plot=p4, filename="check_marker_by_seurat_cluster.pdf")
