@@ -1,12 +1,9 @@
 ---
 title: 卸载conda并重装
-banner:
-  type: video
-  bgurl: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
-  bannerText: I'm stay with you.
+banner: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
 date: 2023-12-26 16:30:23
 tags:
-cover:
+
 ---
 1. 确保没有进程正在使用conda
 	特别是screen下，不确定可以都杀掉

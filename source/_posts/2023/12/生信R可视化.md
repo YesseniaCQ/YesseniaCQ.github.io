@@ -1,12 +1,9 @@
 ---
 title: 生信R可视化
-banner:
-  type: video
-  bgurl: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
-  bannerText: I'm stay with you.
+banner: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
 date: 2023-12-28 09:39:23
 tags:
-cover:
+
 ---
 ### 导出图片
 ```r

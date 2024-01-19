@@ -1,7 +1,7 @@
 ---
 title: Centos 7 非root用户安装rpm格式软件
 date: 2023-08-06 19:18:54
-cover: [https://www.logosc.cn/uploads/resources/2018/11/29/1543459457_thumb.jpg]
+
 ---
 
 

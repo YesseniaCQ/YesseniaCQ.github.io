@@ -1,12 +1,8 @@
 ---
 title: Dictys教程使用心得
-banner:
-  type: video
-  bgurl: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
-  bannerText: I'm stay with you.
+banner: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
 date: 2023-08-25 00:34:02
 tags:
-cover:
 ---
 
 - 使用 dictys_helper network_inference.sh，会自动对每个细胞子集进行分析（注意线程数）：

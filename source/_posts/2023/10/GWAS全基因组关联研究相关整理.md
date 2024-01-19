@@ -1,12 +1,9 @@
 ---
 title: GWAS全基因组关联研究相关整理
-banner:
-  type: video
-  bgurl: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
-  bannerText: I'm stay with you.
+banner: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
 date: 2023-10-12 16:57:02
 tags:
-cover:
+
 ---
 
 > 参考文档：[进行全基因组关联研究的教程：质量控制和统计分析 - Marees - 2018 - 国际精神病学研究方法杂志 - Wiley 在线图书馆](https://onlinelibrary.wiley.com/doi/full/10.1002/mpr.1608)

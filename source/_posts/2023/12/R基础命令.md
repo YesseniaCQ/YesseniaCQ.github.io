@@ -1,12 +1,10 @@
 ---
 title: R基础命令
-banner:
-  type: video
-  bgurl: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
-  bannerText: I'm stay with you.
+banner: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
+
 date: 2023-12-28 10:16:27
 tags:
-cover:
+
 ---
 ```r
 setwd(dir = "D:/R/R_Workspace") #设置需要的工作路径,注意斜杠的方向和其他编程语言不同  

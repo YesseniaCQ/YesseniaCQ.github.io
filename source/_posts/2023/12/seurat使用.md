@@ -1,14 +1,12 @@
 ---
 title: seurat使用
-banner:
-  type: video
-  bgurl: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
-  bannerText: I'm stay with you.
+banner: https://cdn.jsdelivr.net/gh/YesseniaCQ/img/video/心壑/心壑.m3u8
 date: 2023-12-29 10:06:25
 tags:
-cover:
+
 ---
 ![[Pasted image 20240103183223.png]]
+![[Pasted image 20240115230821.png]]
 ## 转录组处理
 ```r
 ###当前环境为outImg
